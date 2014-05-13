@@ -2,7 +2,7 @@
 #include "MyProc.h"
 #include <math.h>
 
-//ÉùÃ÷Íâ²¿ÎÄ¼şµÄÈ«¾Ö±äÁ¿
+//å£°æ˜å¤–éƒ¨æ–‡ä»¶çš„å…¨å±€å˜é‡
 extern int peopleNum;
 extern int groupNum;
 
@@ -16,25 +16,25 @@ extern int leftBorder;
 
 extern CRect rect;
 
-// 16¸ö¼ì²â¿ò
+// 16ä¸ªæ£€æµ‹æ¡†
 extern _DetectRect detectRect[16];
 
-// ×îÖÕ²ÉÓÃµÄ¼ì²â¿òµÄ±àºÅ
+// æœ€ç»ˆé‡‡ç”¨çš„æ£€æµ‹æ¡†çš„ç¼–å·
 int finalRectNum;
 
-// ÊÇ·ñÒÑ¾­Ñ¡¶¨ÁË×îÖÕÓÃÓÚ±È½ÏµÄÏß¶Î
+// æ˜¯å¦å·²ç»é€‰å®šäº†æœ€ç»ˆç”¨äºæ¯”è¾ƒçš„çº¿æ®µ
 bool isRectConfirmed;
 
 CString originText, newText, newText2;
 extern int firstFlag;
 
-// ËÄÉáÎåÈë
+// å››èˆäº”å…¥
 int round(double num)
 {
 	return (int)floor(num + 0.5);
 }
 
-//»ùÓÚÓÎ³ÌµÄÁ¬Í¨ÇøÓò±ê¼ÇËã·¨
+//åŸºäºæ¸¸ç¨‹çš„è¿é€šåŒºåŸŸæ ‡è®°ç®—æ³•
 void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 {
 	int i, j, k, l;
@@ -42,10 +42,10 @@ void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 	int maxStart;
 	int minRight;
 	
-	//±éÀúÃ¿Ò»ĞĞ
+	//éå†æ¯ä¸€è¡Œ
 	for(i=0; i<HEIGHT; i++)
 	{
-		//ÕÒµ½Ã¿Ò»ĞĞµÄÓÎ³Ì
+		//æ‰¾åˆ°æ¯ä¸€è¡Œçš„æ¸¸ç¨‹
 		for(j=0; j<WIDTH; j++)
 		{
 			if(fore[i*WIDTH+j].isFore)
@@ -67,10 +67,10 @@ void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 			}
 		}
 
-		//ÈôÎªÁ¬Í¨ÇøÓòµÄµÚÒ»ĞĞ
+		//è‹¥ä¸ºè¿é€šåŒºåŸŸçš„ç¬¬ä¸€è¡Œ
 		if((connNum == 0) && (tourNum != 0))
 		{
-			//ÔòÕë¶ÔÃ¿Ò»¸öÓÎ³Ì·ÖÅäÒ»¸öĞÂµÄÇøÓò±êºÅ
+			//åˆ™é’ˆå¯¹æ¯ä¸€ä¸ªæ¸¸ç¨‹åˆ†é…ä¸€ä¸ªæ–°çš„åŒºåŸŸæ ‡å·
 			for(j=0; j<tourNum; j++)
 			{
 				if(tours[j].rowNum == i)
@@ -80,33 +80,33 @@ void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 				}
 			}
 		} 
-		else	//Èô²»ÎªµÚÒ»ĞĞ
+		else	//è‹¥ä¸ä¸ºç¬¬ä¸€è¡Œ
 		{
-			//Ôò½«µ±Ç°ĞĞµÄÃ¿Ò»¸öÓÎ³Ì R_now ÓëÉÏÒ»ĞĞµÄÃ¿Ò»¸öÓÎ³Ì R_pre ½øĞĞÆ¥Åä
+			//åˆ™å°†å½“å‰è¡Œçš„æ¯ä¸€ä¸ªæ¸¸ç¨‹ R_now ä¸ä¸Šä¸€è¡Œçš„æ¯ä¸€ä¸ªæ¸¸ç¨‹ R_pre è¿›è¡ŒåŒ¹é…
 			for(j=0; j<tourNum; j++)
 			{
-				if(tours[j].rowNum == i)	//µ±Ç°ĞĞ
+				if(tours[j].rowNum == i)	//å½“å‰è¡Œ
 				{
 					for(k=0; k<tourNum; k++)
 					{
-						if(tours[k].rowNum == (i-1))	//ÉÏÒ»ĞĞ
+						if(tours[k].rowNum == (i-1))	//ä¸Šä¸€è¡Œ
 						{
 							maxStart = tours[j].start>tours[k].start? tours[j].start : tours[k].start;
 							minRight = tours[j].end<tours[k].end? tours[j].end: tours[k].end;
 							
-							//Èô R_now ÕÒµ½ÁËÄÜÓëÖ®Æ¥ÅäµÄ R_pre
+							//è‹¥ R_now æ‰¾åˆ°äº†èƒ½ä¸ä¹‹åŒ¹é…çš„ R_pre
 							if(maxStart < minRight)
 							{
-								//Èô´Ë R_now Î´±ê¼Ç
+								//è‹¥æ­¤ R_now æœªæ ‡è®°
 								if(!tours[j].isMatched)
 								{
-									//Ôò½« R_pre µÄ±êºÅ¸³Óè R_now£¬²¢±ê¼Ç´Ë R_now ÎªÒÑ±ê¼Ç
+									//åˆ™å°† R_pre çš„æ ‡å·èµ‹äºˆ R_nowï¼Œå¹¶æ ‡è®°æ­¤ R_now ä¸ºå·²æ ‡è®°
 									tours[j].connNum = tours[k].connNum;
 									tours[j].isMatched = true;
 								} 
-								else	//Èô´Ë R_now ÒÑ±ê¼Ç
+								else	//è‹¥æ­¤ R_now å·²æ ‡è®°
 								{
-									//Ôò½« R_now µÄ±êºÅ¸³Óè R_pre ¼°ÆäËùÓĞµÄÁªÍ¨ÓÎ³Ì
+									//åˆ™å°† R_now çš„æ ‡å·èµ‹äºˆ R_pre åŠå…¶æ‰€æœ‰çš„è”é€šæ¸¸ç¨‹
 									for(l=0; l<tourNum; l++)
 									{
 										if(tours[l].connNum == tours[k].connNum)
@@ -115,16 +115,16 @@ void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 										}
 									}
 								}
-							}//ÈôÆ¥Åä
-						}//ÉÏÒ»ĞĞ
+							}//è‹¥åŒ¹é…
+						}//ä¸Šä¸€è¡Œ
 					}
-				}//µ±Ç°ĞĞ
+				}//å½“å‰è¡Œ
 			}
 
-			//±éÀúËùÓĞµÄ R_now
+			//éå†æ‰€æœ‰çš„ R_now
 			for(j=0; j<tourNum; j++)
 			{
-				//ÈôÄ³ R_now Î´Æ¥Åä£¬ÔòÎªÆä·ÖÅäĞÂµÄÇøÓò±êºÅ
+				//è‹¥æŸ R_now æœªåŒ¹é…ï¼Œåˆ™ä¸ºå…¶åˆ†é…æ–°çš„åŒºåŸŸæ ‡å·
 				if((tours[j].rowNum == i) && (!tours[j].isMatched))
 				{
 					//AfxMessageBox("s");
@@ -132,10 +132,10 @@ void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 					connNum++;
 				}
 			}
-		}//Ç°ºóÁ½ĞĞ½øĞĞÆ¥Åä
+		}//å‰åä¸¤è¡Œè¿›è¡ŒåŒ¹é…
 	}
 
-	//½«ËùÓĞÓÎ³ÌµÄÇøÓò±êºÅ¸³ÓèÆä¶ÔÓ¦µÄÏñËØ£¬²¢±ê¼Ç´ËÏñËØÎª isNumbered
+	//å°†æ‰€æœ‰æ¸¸ç¨‹çš„åŒºåŸŸæ ‡å·èµ‹äºˆå…¶å¯¹åº”çš„åƒç´ ï¼Œå¹¶æ ‡è®°æ­¤åƒç´ ä¸º isNumbered
 	for(i=0; i<tourNum; i++)
 	{
 		for(j=tours[i].start; j<=tours[i].end; j++)
@@ -145,16 +145,16 @@ void LabelConnByTour(struct foreImg* fore, struct tour* tours)
 		}
 	}
 
-	//ÓÎ³ÌºÅºÍÁ¬Í¨ÇøÓò±êºÅÖÃÁã
+	//æ¸¸ç¨‹å·å’Œè¿é€šåŒºåŸŸæ ‡å·ç½®é›¶
 	//tourNum = 0;
 	//connNum = 0;
 }
 
 
-//¼ÆËã¾ØĞÎÄÚÈİ
+//è®¡ç®—çŸ©å½¢å†…å®¹
 void InitRectCalc(POINT* linePos, int enterType, _DetectRect* newRect)
 {
-	//¸³Öµ¼ÆËã½á¹ûµ½¾ØĞÎ½á¹¹Ìå
+	//èµ‹å€¼è®¡ç®—ç»“æœåˆ°çŸ©å½¢ç»“æ„ä½“
 	int n0 = (enterType) % 4;
 	int n1 = (enterType + 1) % 4;
 	int n2 = (enterType + 2) % 4;
@@ -194,28 +194,28 @@ void InitRectCalc(POINT* linePos, int enterType, _DetectRect* newRect)
 }
 
 
-//¼ÆËãĞı×ª¹«Ê½
+//è®¡ç®—æ—‹è½¬å…¬å¼
 void RotatePointCalc(_Point pSource, _Point* pResult, _Point center, long double angle){
 	pResult->x = cos(angle) * (pSource.x - center.x) - sin(angle) * (pSource.y - center.y) + center.x;
 	pResult->y = sin(angle) * (pSource.x - center.x) + cos(angle) * (pSource.y - center.y) + center.y;
 }
 
-//¼ÆËãĞı×ªºó¾ØĞÎËÄ¸ö½Ç×ø±ê
+//è®¡ç®—æ—‹è½¬åçŸ©å½¢å››ä¸ªè§’åæ ‡
 void RotateRectCalc(_DetectRect* rotateRect, int angleDu){
 	long double angle;
 	_Point centerPos;
 	_DetectRect tmpRect;
 
-	// ¶ÈÊı×ªÎª»¡¶ÈÖÆ
+	// åº¦æ•°è½¬ä¸ºå¼§åº¦åˆ¶
 	angle = (long double)angleDu * 3.141592653 / 180.0; 
 	
-	//¼ÆËã¾ØĞÎÖĞĞÄ×ø±ê£¨ÈÆÖĞĞÄĞı×ª£©
+	//è®¡ç®—çŸ©å½¢ä¸­å¿ƒåæ ‡ï¼ˆç»•ä¸­å¿ƒæ—‹è½¬ï¼‰
 	centerPos.x = (rotateRect->corners[0].x + rotateRect->corners[1].x
 				  + rotateRect->corners[2].x + rotateRect->corners[3].x) / 4.0;
 	centerPos.y = (rotateRect->corners[0].y + rotateRect->corners[1].y
 				  + rotateRect->corners[2].y + rotateRect->corners[3].y) / 4.0;
 
-	//¼ÆËãĞı×ªºó×ø±ê
+	//è®¡ç®—æ—‹è½¬ååæ ‡
 	RotatePointCalc(rotateRect->enterLine.p0, &tmpRect.enterLine.p0, centerPos, angle);
 	RotatePointCalc(rotateRect->enterLine.p1, &tmpRect.enterLine.p1, centerPos, angle);
 	RotatePointCalc(rotateRect->leaveLine[0].p0, &tmpRect.leaveLine[0].p0, centerPos, angle);
@@ -240,7 +240,7 @@ void RotateRectCalc(_DetectRect* rotateRect, int angleDu){
 }
 
 
-//¼ÆËã¾ØĞÎËÄÌõ±ßĞ±ÂÊ½Ø¾à
+//è®¡ç®—çŸ©å½¢å››æ¡è¾¹æ–œç‡æˆªè·
 void ABRectCalc(_Line* rectLine)
 {
 	double xDif;
@@ -269,12 +269,12 @@ void ABRectCalc(_Line* rectLine)
 	rectLine->minY = min(rectLine->p0.y, rectLine->p1.y);
 }
 
-//16¸ö¾ØĞÎĞŞÕı
+//16ä¸ªçŸ©å½¢ä¿®æ­£
 void TotalRectMend(_DetectRect* detectRectArray)
 {
 	int i;
 
-	//¼ÆËã¾ØĞÎËÄÌõ±ßÏßÏß¶Î±í´ïÊ½
+	//è®¡ç®—çŸ©å½¢å››æ¡è¾¹çº¿çº¿æ®µè¡¨è¾¾å¼
 	for (i = 0; i <16; i ++)
 	{
 		if(detectRectArray[i].isDrew == TRUE)
@@ -290,7 +290,7 @@ void TotalRectMend(_DetectRect* detectRectArray)
 	}
 }
 
-// »æÖÆ¼ì²âÇøÓò
+// ç»˜åˆ¶æ£€æµ‹åŒºåŸŸ
 void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 {
 	CRect picRect;
@@ -310,7 +310,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 	dRect.leaveLine[1].p1.x = dRect.leaveLine[1].p1.x * (double)(picRect.Width()) / (double)WIDTH;
 	dRect.leaveLine[1].p1.y = dRect.leaveLine[1].p1.y * (double)(picRect.Height()) / (double)HEIGHT;
 	
-	//ÖØĞÂ¼ÆËãĞı×ªºó¾ø¶Ô×ø±ê£¨¶Ô»°¿ò×ø±ê£©
+	//é‡æ–°è®¡ç®—æ—‹è½¬åç»å¯¹åæ ‡ï¼ˆå¯¹è¯æ¡†åæ ‡ï¼‰
 	enterP0.x = (long)(dRect.enterLine.p0.x + picRect.left);
 	enterP0.y = (long)(dRect.enterLine.p0.y + picRect.top);
 	enterP1.x = (long)(dRect.enterLine.p1.x + picRect.left);
@@ -323,7 +323,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 	centerX = (enterP0.x + enterP1.x + leaveP0.x + leaveP1.x) / 4.0 - 4.0;
 	centerY = (enterP0.y + enterP1.y + leaveP0.y + leaveP1.y) / 4.0 - 6.0;
 
-	//»æÖÆ¿òĞòºÅ
+	//ç»˜åˆ¶æ¡†åºå·
 	CFont*  pOldFont;
 	CFont newFont;
 	newFont.CreatePointFont(1, "Arial");
@@ -333,7 +333,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 	txt.Format("%d", dRect.rectNum);
 	pDC.TextOut((int)centerX,(int)centerY,txt);
 	
-	//´´½¨»­±Ê
+	//åˆ›å»ºç”»ç¬”
 	CPen penY(PS_SOLID, 0, RGB(255,255,0));
 	CPen penB(PS_SOLID, 0, RGB(0,0,255));
 	CPen penG(PS_SOLID, 0, RGB(0,255,0));
@@ -341,7 +341,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 	CPen penBX(PS_DOT, 0, RGB(0,0,255));
 	CPen penGX(PS_DOT, 0, RGB(0,255,0));
 
-	//ÎŞ¹´Ñ¡
+	//æ— å‹¾é€‰
 	if (drawMode == 0)
 	{
 		CPen* enterPen = pDC.SelectObject(&penB); 
@@ -353,7 +353,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 		pDC.LineTo(leaveP1);
 		pDC.LineTo(enterP0);
 	}
-	//ÓĞ¹´Ñ¡
+	//æœ‰å‹¾é€‰
 	else if (drawMode == 1)
 	{
 		CPen* enterPen = pDC.SelectObject(&penBX); 
@@ -365,7 +365,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 		pDC.LineTo(leaveP1);
 		pDC.LineTo(enterP0);
 	}
-	else if (drawMode == 2)	// »­ºì¿ò
+	else if (drawMode == 2)	// ç”»çº¢æ¡†
 	{
 		CPen* enterPen = pDC.SelectObject(&penR); 
 		pDC.MoveTo(enterP0);
@@ -378,7 +378,7 @@ void DrawDetectRect(_DetectRect dRect, int rectID, int drawMode)
 	}
 }
 
-//Æ½ÒÆ¼ì²â¿ò
+//å¹³ç§»æ£€æµ‹æ¡†
 void MoveDetectRect(_DetectRect* moveRect, int moveMode){
 	if (moveMode == RECT_MOVE_LEFT){
 		moveRect->corners[0].x --;
@@ -438,7 +438,7 @@ void MoveDetectRect(_DetectRect* moveRect, int moveMode){
 	}
 }
 
-//ÏÔÊ¾¼ì²â¿òĞÅÏ¢
+//æ˜¾ç¤ºæ£€æµ‹æ¡†ä¿¡æ¯
 void DispDetectRectInfo(int rectID){
 	unsigned int enterWidth = 0;
 	unsigned int leaveLength = 0;
@@ -483,7 +483,7 @@ void DispDetectRectInfo(int rectID){
 }
 
 
-//´´½¨ÈËÌåÄ£ĞÍµÄ¿ÕÁĞ±í
+//åˆ›å»ºäººä½“æ¨¡å‹çš„ç©ºåˆ—è¡¨
 pplList CreatePeopleList()
 {
 	pplList L;
@@ -493,22 +493,22 @@ pplList CreatePeopleList()
 	return L;
 }
 
-//Ôö¼ÓÈËÌå
+//å¢åŠ äººä½“
 void AddPeople(int peopleNum, double* histBins, unsigned long time, pplList L)
 {
 	int i;
 	pplNode P, newPpl;
 	
-	//PÖ¸Ïò±íÍ·
+	//PæŒ‡å‘è¡¨å¤´
 	P = L;
 
-	//ÕÒµ½±íµÄÄ©Î²Î»ÖÃ
+	//æ‰¾åˆ°è¡¨çš„æœ«å°¾ä½ç½®
 	while(P->nextPeople != NULL)
 	{
 		P = P->nextPeople;
 	}
 
-	//ÔÚÁ´±íµÄÄ©Î²Ìí¼ÓĞÂµÄÈËÌåÄ£ĞÍ
+	//åœ¨é“¾è¡¨çš„æœ«å°¾æ·»åŠ æ–°çš„äººä½“æ¨¡å‹
 	newPpl = (pplNode)malloc(sizeof(pplModel));
 	newPpl->peopleNum = peopleNum;
 
@@ -524,14 +524,14 @@ void AddPeople(int peopleNum, double* histBins, unsigned long time, pplList L)
 }
 
 
-//¸üĞÂÈËÌå
+//æ›´æ–°äººä½“
 void UpdatePeople(int peopleNum, double* histBins, unsigned long time, double speed, pplList L)
 {
 	int i;
 	pplNode P;
 	CString str;
 
-	//ÈôÎª¿Õ±í£¬ÔòÍË³ö
+	//è‹¥ä¸ºç©ºè¡¨ï¼Œåˆ™é€€å‡º
 	if(L->nextPeople == NULL)
 	{
 		return;
@@ -543,44 +543,44 @@ void UpdatePeople(int peopleNum, double* histBins, unsigned long time, double sp
 	{
 		P = P->nextPeople;
 
-		//Èôµ½´ï±íÎ²£¬ÔòÍË³ö
+		//è‹¥åˆ°è¾¾è¡¨å°¾ï¼Œåˆ™é€€å‡º
 		if(P == NULL)
 		{
 			return;
 		}
 	}
 
-	//¸üĞÂ¸ÅÂÊÖ±·½Í¼
+	//æ›´æ–°æ¦‚ç‡ç›´æ–¹å›¾
 	for(i=0; i<4096; i++)
 	{
 		P->histBins[i] = HIST_UPDATE_WEIGHT * P->histBins[i] + (1 - HIST_UPDATE_WEIGHT) * histBins[i];
 	}
 
-	//¼ÆËã¶ºÁôÊ±¼ä
+	//è®¡ç®—é€—ç•™æ—¶é—´
 	P->stayTime = time - P->appearTime;
-	if(P->stayTime > ABNORMAL_STAY_TIME)	//ÅĞ¶ÏÊÇ·ñÒì³£
+	if(P->stayTime > ABNORMAL_STAY_TIME)	//åˆ¤æ–­æ˜¯å¦å¼‚å¸¸
 	{
-		str.Format("ÈË%d¶ºÁôÊ±¼ä¹ı³¤£¡", P->peopleNum);
+		str.Format("äºº%dé€—ç•™æ—¶é—´è¿‡é•¿ï¼", P->peopleNum);
 		//AfxMessageBox(str.GetBuffer(0));
 	}
 
-	//±£´æµ±Ç°ËÙ¶È
+	//ä¿å­˜å½“å‰é€Ÿåº¦
 	P->speed = speed;
 
 	if(P->speed > ABNORMAL_SPEED)
 	{
-		str.Format("ÈË%dËÙ¶È¹ı¿ì£¡", P->peopleNum);
+		str.Format("äºº%dé€Ÿåº¦è¿‡å¿«ï¼", P->peopleNum);
 		//AfxMessageBox(str.GetBuffer(0));
 	}
 }
 
-//¸üĞÂÈËÌå£¨¸üĞÂÊ±¼ä¡¢ËÙ¶È£¬²»¸üĞÂÖ±·½Í¼£©
+//æ›´æ–°äººä½“ï¼ˆæ›´æ–°æ—¶é—´ã€é€Ÿåº¦ï¼Œä¸æ›´æ–°ç›´æ–¹å›¾ï¼‰
 void UpdatePeopleExHist(int peopleNum, unsigned long time, double speed, pplList L)
 {
 	pplNode P;
 	CString str;
 	
-	//ÈôÎª¿Õ±í£¬ÔòÍË³ö
+	//è‹¥ä¸ºç©ºè¡¨ï¼Œåˆ™é€€å‡º
 	if(L->nextPeople == NULL)
 	{
 		return;
@@ -592,37 +592,37 @@ void UpdatePeopleExHist(int peopleNum, unsigned long time, double speed, pplList
 	{
 		P = P->nextPeople;
 		
-		//Èôµ½´ï±íÎ²£¬ÔòÍË³ö
+		//è‹¥åˆ°è¾¾è¡¨å°¾ï¼Œåˆ™é€€å‡º
 		if(P == NULL)
 		{
 			return;
 		}
 	}
 	
-	//¼ÆËã¶ºÁôÊ±¼ä
+	//è®¡ç®—é€—ç•™æ—¶é—´
 	P->stayTime = time - P->appearTime;
-	if(P->stayTime > ABNORMAL_STAY_TIME)	//ÅĞ¶ÏÊÇ·ñÒì³£
+	if(P->stayTime > ABNORMAL_STAY_TIME)	//åˆ¤æ–­æ˜¯å¦å¼‚å¸¸
 	{
-		str.Format("ÈË%d¶ºÁôÊ±¼ä¹ı³¤£¡", P->peopleNum);
+		str.Format("äºº%dé€—ç•™æ—¶é—´è¿‡é•¿ï¼", P->peopleNum);
 		//AfxMessageBox(str.GetBuffer(0));
 	}
 
-	//±£´æµ±Ç°ËÙ¶È
+	//ä¿å­˜å½“å‰é€Ÿåº¦
 	P->speed = speed;
 	if(P->speed > ABNORMAL_SPEED)
 	{
-		str.Format("ÈË%dËÙ¶È¹ı¿ì£¡", P->peopleNum);
+		str.Format("äºº%dé€Ÿåº¦è¿‡å¿«ï¼", P->peopleNum);
 		//AfxMessageBox(str.GetBuffer(0));
 	}
 }
 
-//»ñÈ¡ÈËÌåµÄÖ±·½Í¼ĞÅÏ¢
+//è·å–äººä½“çš„ç›´æ–¹å›¾ä¿¡æ¯
 void GetPeopleHist(int peopleNum, double* histBins, pplList L)
 {
 	int i;
 	pplNode P;
 	
-	//ÈôÎª¿Õ±í£¬ÔòÍË³ö
+	//è‹¥ä¸ºç©ºè¡¨ï¼Œåˆ™é€€å‡º
 	if(L->nextPeople == NULL)
 	{
 		return;
@@ -634,62 +634,62 @@ void GetPeopleHist(int peopleNum, double* histBins, pplList L)
 	{
 		P = P->nextPeople;
 		
-		//Èôµ½´ï±íÎ²£¬ÔòÍË³ö
+		//è‹¥åˆ°è¾¾è¡¨å°¾ï¼Œåˆ™é€€å‡º
 		if(P == NULL)
 		{
 			return;
 		}
 	}
 	
-	//¸üĞÂ¸ÅÂÊÖ±·½Í¼
+	//æ›´æ–°æ¦‚ç‡ç›´æ–¹å›¾
 	for(i=0; i<4096; i++)
 	{
 		histBins[i] = P->histBins[i];
 	}
 }
 
-//É¾³ıÈËÌå
+//åˆ é™¤äººä½“
 void DeletePeople(int peopleNum, pplList L)
 {
 	pplNode P, tmpNode;
 
-	//Èô´Ë±íÎª¿Õ±í£¬ÔòÍË³öº¯Êı
+	//è‹¥æ­¤è¡¨ä¸ºç©ºè¡¨ï¼Œåˆ™é€€å‡ºå‡½æ•°
 	if(L->nextPeople == NULL)
 	{
 		return;
 	}
 
-	//PÖ¸Ïò±íÍ·
+	//PæŒ‡å‘è¡¨å¤´
 	P = L;
 
-	//ÕÒµ½º¬ÓĞ´Ë peopleNum µÄ±íÏîµÄÇ°Ò»Ïî P
+	//æ‰¾åˆ°å«æœ‰æ­¤ peopleNum çš„è¡¨é¡¹çš„å‰ä¸€é¡¹ P
 	while((P->nextPeople)->peopleNum != peopleNum)
 	{
-		//ÈôÎ´ÕÒµ½£¬ÔòÖ¸ÕëÒÆµ½ÏÂÒ»Ïî
+		//è‹¥æœªæ‰¾åˆ°ï¼Œåˆ™æŒ‡é’ˆç§»åˆ°ä¸‹ä¸€é¡¹
 		P = P->nextPeople;
 		
-		//Èç¹ûÒÑ¾­ÕÒµ½±íÎ²£¬ÔòÍË³ö³ÌĞò
+		//å¦‚æœå·²ç»æ‰¾åˆ°è¡¨å°¾ï¼Œåˆ™é€€å‡ºç¨‹åº
 		if(P->nextPeople == NULL)
 		{
 			return;
 		}
 	}
 
-	//É¾³ı´Ë±íÏî
+	//åˆ é™¤æ­¤è¡¨é¡¹
 	tmpNode = P->nextPeople;
 	P->nextPeople = tmpNode->nextPeople;
 	free(tmpNode);
 }
 
-//´òÓ¡ÈËÌå
+//æ‰“å°äººä½“
 void PrintPeopleList(pplList L)
 {
 	CString str, tmp;
 	pplNode P;
 
-	str = "P£º";
+	str = "Pï¼š";
 
-	//ÈôÎª¿Õ±í£¬ÔòÍË³ö
+	//è‹¥ä¸ºç©ºè¡¨ï¼Œåˆ™é€€å‡º
 	if(L->nextPeople == NULL)
 	{	
 		return;
@@ -697,7 +697,7 @@ void PrintPeopleList(pplList L)
 
 	P = L->nextPeople;
 
-	//±éÀúÃ¿Ò»¸öÈËÌåÄ£ĞÍ£¬²¢ÏÔÊ¾ÆäÈËÌå±àºÅ
+	//éå†æ¯ä¸€ä¸ªäººä½“æ¨¡å‹ï¼Œå¹¶æ˜¾ç¤ºå…¶äººä½“ç¼–å·
 	while(P != NULL)
 	{
 		tmp.Format("%d", P->peopleNum);
@@ -705,31 +705,31 @@ void PrintPeopleList(pplList L)
 		P = P->nextPeople;
 	}
 		
-	//ÏÔÊ¾ËùÓĞµÄÈËÌå±àºÅ
+	//æ˜¾ç¤ºæ‰€æœ‰çš„äººä½“ç¼–å·
 	AfxMessageBox(str.GetBuffer(0));
 }
 
-//ÖĞÖµÂË²¨
+//ä¸­å€¼æ»¤æ³¢
 void MiddleFilter(foreImg* img, int filterH, int filterW, int filterMX, int filterMY)
 {
 	int i, j, k, l;
 	char nTrue, nFalse;
 	
-	//ĞĞ£¨³ıÈ¥±ßÔµ¼¸ĞĞ£©
+	//è¡Œï¼ˆé™¤å»è¾¹ç¼˜å‡ è¡Œï¼‰
 	for(i=filterMY; i<HEIGHT-filterH+filterMY+1; i++)
 	{
-		//ÁĞ£¨³ıÈ¥±ßÔµ¼¸ÁĞ£©
+		//åˆ—ï¼ˆé™¤å»è¾¹ç¼˜å‡ åˆ—ï¼‰
 		for(j=filterMX; j<WIDTH-filterW+filterMX+1; j++)
 		{
 			nTrue = 0;
 			nFalse = 0;
 			
-			//½øĞĞÖĞÖµÂË²¨
+			//è¿›è¡Œä¸­å€¼æ»¤æ³¢
 			for(k=0; k<filterH; k++)
 			{
 				for(l=0; l<filterW; l++)
 				{
-					//·Ö±ğÍ³¼ÆÇ°¾°ºÍ±³¾°µÄ¸öÊı
+					//åˆ†åˆ«ç»Ÿè®¡å‰æ™¯å’ŒèƒŒæ™¯çš„ä¸ªæ•°
 					if(img[(i-filterMY+k)*WIDTH+j-filterMX+l].isFore)
 					{
 						nTrue++;
@@ -756,7 +756,7 @@ void MiddleFilter(foreImg* img, int filterH, int filterW, int filterMX, int filt
 		}//j
 	}//i
 	
-	//½«±ßÔµÉèÖÃÎª±³¾°
+	//å°†è¾¹ç¼˜è®¾ç½®ä¸ºèƒŒæ™¯
 	for(i=0; i<HEIGHT; i++)
 	{
 		for(j=0; j<WIDTH; j++)
@@ -769,7 +769,7 @@ void MiddleFilter(foreImg* img, int filterH, int filterW, int filterMX, int filt
 	}//i
 }
 
-//È¥³ıÒõÓ°
+//å»é™¤é˜´å½±
 void RemoveShadow(foreImg* fore)
 {
 	int i, j;
@@ -780,7 +780,7 @@ void RemoveShadow(foreImg* fore)
 		hei[i] = 0;
 	}
 	
-	//Í³¼Æ¸÷ÁĞµÄÇ°¾°ÏñËØÊı
+	//ç»Ÿè®¡å„åˆ—çš„å‰æ™¯åƒç´ æ•°
 	for(j=0; j<WIDTH; j++)
 	{
 		for(i=0; i<HEIGHT; i++)
@@ -792,7 +792,7 @@ void RemoveShadow(foreImg* fore)
 		}
 	}
 	
-	//ÕÒµ½×î´óÖµ
+	//æ‰¾åˆ°æœ€å¤§å€¼
 	int maxHeight = 0;
 	for(j=0; j<WIDTH; j++)
 	{
@@ -802,7 +802,7 @@ void RemoveShadow(foreImg* fore)
 		}
 	}
 	
-	//È¥³ıÇ°¾°ÏñËØÊıĞ¡ÓÚãĞÖµµÄÁĞ
+	//å»é™¤å‰æ™¯åƒç´ æ•°å°äºé˜ˆå€¼çš„åˆ—
 	for(j=0; j<WIDTH; j++)
 	{
 		if(hei[j] < 0.25 * maxHeight)
@@ -815,7 +815,7 @@ void RemoveShadow(foreImg* fore)
 	}	
 }
 
-// ¼ÆËãÄ³ÈËÌåÄ£ĞÍÓëÄ³Á¬Í¨ÇøÓòµÄÆ¥ÅäÏµÊı
+// è®¡ç®—æŸäººä½“æ¨¡å‹ä¸æŸè¿é€šåŒºåŸŸçš„åŒ¹é…ç³»æ•°
 double MatchPeopleToConn(int peopleNum, int nConnRgn, int nPixel, pplList L, foreImg* fore)
 {
 	int i;
@@ -826,10 +826,10 @@ double MatchPeopleToConn(int peopleNum, int nConnRgn, int nPixel, pplList L, for
 	double minHistSum = 0.0;
 	double pplHistSum = 0.0;
 
-	// »ñÈ¡ÈËÌåÖ±·½Í¼Ä£ĞÍ
+	// è·å–äººä½“ç›´æ–¹å›¾æ¨¡å‹
 	GetPeopleHist(peopleNum, pplHistBins, L);
 
-	// »ñÈ¡Á¬Í¨ÇøÓòµÄÖ±·½Í¼Ä£ĞÍ
+	// è·å–è¿é€šåŒºåŸŸçš„ç›´æ–¹å›¾æ¨¡å‹
 	CreateHistBins(connHistBins, nConnRgn, nPixel, fore);
 
 	for(i=0; i<4096; i++)
@@ -841,14 +841,14 @@ double MatchPeopleToConn(int peopleNum, int nConnRgn, int nPixel, pplList L, for
 	return (minHistSum / pplHistSum);
 }
 
-// ±³¾°Ñ§Ï°
+// èƒŒæ™¯å­¦ä¹ 
 void BgLearn(IplImage* pFrame, int frameNum, int watershed, double* mean, double* var)
 {
 	int i, j;
-	static long int sum[PIXEL_BYTES_NUM];		// RGBÀÛ¼ÓºÍ
-	static long int squSum[PIXEL_BYTES_NUM];	// RGBÆ½·½ºÍ
+	static long int sum[PIXEL_BYTES_NUM];		// RGBç´¯åŠ å’Œ
+	static long int squSum[PIXEL_BYTES_NUM];	// RGBå¹³æ–¹å’Œ
 
-	// ³õÊ¼»¯
+	// åˆå§‹åŒ–
 	if(frameNum == 1)
 	{
 		for(i=0; i<PIXEL_BYTES_NUM; i++)
@@ -858,14 +858,14 @@ void BgLearn(IplImage* pFrame, int frameNum, int watershed, double* mean, double
 		}	
 	}
 
-	// ÀÛ¼Ó
+	// ç´¯åŠ 
 	for(j=0; j<PIXEL_BYTES_NUM; j++)
 	{
 		sum[j] += (*pFrame).imageData[j];
 		squSum[j] += (*pFrame).imageData[j] * (*pFrame).imageData[j];
 	}
 	
-	// ¼ÆËã¾ùÖµºÍ·½²î
+	// è®¡ç®—å‡å€¼å’Œæ–¹å·®
 	if(frameNum == watershed)
 	{
 		for(i=0; i<PIXEL_BYTES_NUM; i++)
@@ -875,29 +875,29 @@ void BgLearn(IplImage* pFrame, int frameNum, int watershed, double* mean, double
 		}
 	}
 
-	// ÏÔÊ¾
+	// æ˜¾ç¤º
 	ShowImg(pFrame, IDC_PICTURE_A);
 	drawAllRects(pFrame);
 	ShowImg(pFrame, IDC_PICTURE_B);
 }
 
-//±³¾°²î·ÖÓë¸üĞÂ£¬ÒÔÌáÈ¡Ç°¾°
+//èƒŒæ™¯å·®åˆ†ä¸æ›´æ–°ï¼Œä»¥æå–å‰æ™¯
 void BgDiff(IplImage* pFrame, double* mean, double* var, foreImg* fore) 
 {
 	int i;
 	
-	//²îÖµ
+	//å·®å€¼
 	double diffB, diffG, diffR;
 	
-	//¿ªÊ¼±³¾°²î·ÖÓë±³¾°¸üĞÂ
+	//å¼€å§‹èƒŒæ™¯å·®åˆ†ä¸èƒŒæ™¯æ›´æ–°
 	for(i=0; i<PIXEL_NUM; i++)
 	{
-		//½øĞĞ±³¾°²î·Ö
+		//è¿›è¡ŒèƒŒæ™¯å·®åˆ†
 		diffB = fabsl((*pFrame).imageData[i*3] - mean[i*3]);
 		bool isBFore = (diffB > 3 * var[i*3]);
 		if(isBFore)
 		{
-			//±ê¼ÇÎªÇ°¾°£¬²¢¸³R¡¢G¡¢BÖµ
+			//æ ‡è®°ä¸ºå‰æ™¯ï¼Œå¹¶èµ‹Rã€Gã€Bå€¼
 			fore[i].isFore = true;
 			fore[i].bValue = (*pFrame).imageData[i*3];
 			fore[i].gValue = (*pFrame).imageData[i*3+1];
@@ -909,7 +909,7 @@ void BgDiff(IplImage* pFrame, double* mean, double* var, foreImg* fore)
 			bool isGFore = (diffG > 3 * var[i*3+1]);
 			if(isGFore)
 			{
-				//±ê¼ÇÎªÇ°¾°£¬²¢¸³R¡¢G¡¢BÖµ
+				//æ ‡è®°ä¸ºå‰æ™¯ï¼Œå¹¶èµ‹Rã€Gã€Bå€¼
 				fore[i].isFore = true;
 				fore[i].bValue = (*pFrame).imageData[i*3];
 				fore[i].gValue = (*pFrame).imageData[i*3+1];
@@ -921,15 +921,15 @@ void BgDiff(IplImage* pFrame, double* mean, double* var, foreImg* fore)
 				bool isRFore = (diffR > 3 * var[i*3+2]);
 				if(isRFore)
 				{
-					//±ê¼ÇÎªÇ°¾°£¬²¢¸³R¡¢G¡¢BÖµ
+					//æ ‡è®°ä¸ºå‰æ™¯ï¼Œå¹¶èµ‹Rã€Gã€Bå€¼
 					fore[i].isFore = true;
 					fore[i].bValue = (*pFrame).imageData[i*3];
 					fore[i].gValue = (*pFrame).imageData[i*3+1];
 					fore[i].rValue = (*pFrame).imageData[i*3+2];
 				}
-				else	//ÈôÎª±³¾°ÏñËØ£¬Ôò½øĞĞ±³¾°¸üĞÂ
+				else	//è‹¥ä¸ºèƒŒæ™¯åƒç´ ï¼Œåˆ™è¿›è¡ŒèƒŒæ™¯æ›´æ–°
 				{
-					//¸üĞÂ¾ùÖµ
+					//æ›´æ–°å‡å€¼
 					mean[i*3] = BG_UPDATE_WEIGHT * mean[i*3] + (1 - BG_UPDATE_WEIGHT) * (*pFrame).imageData[i*3];
 					mean[i*3+1] = BG_UPDATE_WEIGHT * mean[i*3+1] + (1 - BG_UPDATE_WEIGHT) * (*pFrame).imageData[i*3+1];
 					mean[i*3+2] = BG_UPDATE_WEIGHT * mean[i*3+2] + (1 - BG_UPDATE_WEIGHT) * (*pFrame).imageData[i*3+2];
@@ -939,7 +939,7 @@ void BgDiff(IplImage* pFrame, double* mean, double* var, foreImg* fore)
 	}
 }
 
-//´´½¨É«²ÊµÄ¸ÅÂÊÖ±·½Í¼ÈİÆ÷
+//åˆ›å»ºè‰²å½©çš„æ¦‚ç‡ç›´æ–¹å›¾å®¹å™¨
 void CreateHistBins(double* histBins, int nConnRgn, int nPixel, foreImg* fore) 
 {
 	int i;
@@ -949,7 +949,7 @@ void CreateHistBins(double* histBins, int nConnRgn, int nPixel, foreImg* fore)
 		histBins[i] = (double)0;
 	}
 	
-	//¼ÆËãÑÕÉ«Ö±·½Í¼
+	//è®¡ç®—é¢œè‰²ç›´æ–¹å›¾
 	for(i=0; i<PIXEL_NUM; i++)
 	{
 		if((fore[i].nConnRgn == nConnRgn) && (fore[i].isFore))
@@ -959,19 +959,19 @@ void CreateHistBins(double* histBins, int nConnRgn, int nPixel, foreImg* fore)
 		}
 	}
 	
-	//¼ÆËã¸ÅÂÊÖ±·½Í¼
+	//è®¡ç®—æ¦‚ç‡ç›´æ–¹å›¾
 	for(i=0; i<4096; i++)
 	{
 		histBins[i] /= nPixel;
 	}
 }
 
-//ÅĞ¶ÏÆ¥ÅäÀàĞÍ
+//åˆ¤æ–­åŒ¹é…ç±»å‹
 int GetMatchType(int matchTag, pplConn* prePeos, pplConn* currPeos) 
 {
 	int i;
 	
-	//·Ö±ğ¼ÆËãÉÏÒ»Ö¡ºÍµ±Ç°Ö¡ÖĞµÄÆ¥ÅäÇøÓòµÄ¸öÊı
+	//åˆ†åˆ«è®¡ç®—ä¸Šä¸€å¸§å’Œå½“å‰å¸§ä¸­çš„åŒ¹é…åŒºåŸŸçš„ä¸ªæ•°
 	int preMatchNum = 0; 
 	int currMatchNum = 0;
 	int matchType = 0;
@@ -988,16 +988,16 @@ int GetMatchType(int matchTag, pplConn* prePeos, pplConn* currPeos)
 		}
 	}
 	
-	//1¶Ô1
+	//1å¯¹1
 	if((preMatchNum == 1) && (currMatchNum == 1))
 	{
 		matchType = MATCH_TYPE_1T1;
 	}
-	else if((preMatchNum == 1) && (currMatchNum > 1))	//1¶Ô¶à
+	else if((preMatchNum == 1) && (currMatchNum > 1))	//1å¯¹å¤š
 	{
 		matchType = MATCH_TYPE_1TM;
 	} 
-	else if((preMatchNum > 1) && (currMatchNum == 1))	//¶à¶Ô1
+	else if((preMatchNum > 1) && (currMatchNum == 1))	//å¤šå¯¹1
 	{
 		matchType = MATCH_TYPE_MT1;
 	}
@@ -1005,7 +1005,7 @@ int GetMatchType(int matchTag, pplConn* prePeos, pplConn* currPeos)
 	return matchType;
 }
 
-//ÈËÌåÆ¥Åä
+//äººä½“åŒ¹é…
 void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pList) 
 {
 	int i, j, k, l, m;
@@ -1018,7 +1018,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 
 	CFinalTestDlg *mWin = (CFinalTestDlg *)AfxGetApp()->m_pMainWnd;
 
-	//½øĞĞÇ°ºóÍ¼ÏñÖ¡ÖĞ¶ÔÓ¦ÓÚÈËÌåµÄÁ¬Í¨ÇøÓòµÄÆ¥Åä
+	//è¿›è¡Œå‰åå›¾åƒå¸§ä¸­å¯¹åº”äºäººä½“çš„è¿é€šåŒºåŸŸçš„åŒ¹é…
 	for(i=0; i<MAX_TRACKING_PEOPLE; i++)
 	{
 		if(currPeos[i].isPeople)
@@ -1027,16 +1027,16 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 			{
 				if(prePeos[j].isPeople)
 				{
-					//µ±Ç°Ö¡ÖĞµÚi¸öÈËÌåÇøÓòºÍÉÏÒ»Ö¡ÖĞµÚj¸öÈËÌåÇøÓò½øĞĞÆ¥Åä
+					//å½“å‰å¸§ä¸­ç¬¬iä¸ªäººä½“åŒºåŸŸå’Œä¸Šä¸€å¸§ä¸­ç¬¬jä¸ªäººä½“åŒºåŸŸè¿›è¡ŒåŒ¹é…
 					
-					//¼ÆËã±ß½ç¿òµÄÖØµşÃæ»ı
+					//è®¡ç®—è¾¹ç•Œæ¡†çš„é‡å é¢ç§¯
 					int lapLeft = (currPeos[i].left > prePeos[j].left)? currPeos[i].left: prePeos[j].left;
 					int lapRight = (currPeos[i].right < prePeos[j].right)? currPeos[i].right: prePeos[j].right;
 					//int lapUp = (currPeos[i].up > prePeos[j].up)? currPeos[i].up: prePeos[j].up;
 					//int lapDown = (currPeos[i].down < prePeos[j].down)? currPeos[i].down: prePeos[j].down;
 					//int lapArea = (lapRight - lapLeft) * (lapDown - lapUp);
 					
-					//¼ÆËãÆ¥ÅäÏµÊı
+					//è®¡ç®—åŒ¹é…ç³»æ•°
 					//double matchFactor = (double)lapArea / ((currPeos[i].area < prePeos[j].area)? currPeos[i].area: prePeos[j].area);
 					
 					int preLen = currPeos[i].right - currPeos[i].left;
@@ -1057,14 +1057,14 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 					double matchFactor = (minHistSum / pplHistSum);
 
 					CString str;
-					str.Format("µ±Ç°ÇøÓò%dºÍÉÏÒ»ÇøÓò%d:%f", i, j, matchFactor);
+					str.Format("å½“å‰åŒºåŸŸ%då’Œä¸Šä¸€åŒºåŸŸ%d:%f", i, j, matchFactor);
 					AfxMessageBox(str.GetBuffer(0));
 					*/
 
-					//ÈôÆ¥Åä
+					//è‹¥åŒ¹é…
 					if(matchFactor > THRESHOLD_MATCH)
 					{
-						//Èç¹û·¢ÏÖµ±Ç°Ö¡µÄ´ËÇøÓòÒÑÆ¥Åä£¬Ôò
+						//å¦‚æœå‘ç°å½“å‰å¸§çš„æ­¤åŒºåŸŸå·²åŒ¹é…ï¼Œåˆ™
 						if(currPeos[i].matchTag != 0)
 						{
 							prePeos[j].matchTag = currPeos[i].matchTag;
@@ -1073,14 +1073,14 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 						{
 							currPeos[i].matchTag = prePeos[j].matchTag;
 						}
-						else if((prePeos[j].matchTag == 0) && (currPeos[i].matchTag == 0))	// Èô¶¼Ã»ÓĞÆ¥Åä
+						else if((prePeos[j].matchTag == 0) && (currPeos[i].matchTag == 0))	// è‹¥éƒ½æ²¡æœ‰åŒ¹é…
 						{
 							prePeos[j].matchTag = matchTag;
 							currPeos[i].matchTag = matchTag;
 							matchTag++;
 						}
 
-						//ÅĞ¶ÏÒÆ¶¯·½Ïò
+						//åˆ¤æ–­ç§»åŠ¨æ–¹å‘
 						double moveLength = ((currPeos[i].left + currPeos[i].right) / (double)2) - ((prePeos[j].left + prePeos[j].right) / (double)2);
 						if(moveLength <= 0)
 						{
@@ -1093,7 +1093,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 							currPeos[i].direction -= 1;
 						}
 
-						//¼ÆËãÊ±¼ä
+						//è®¡ç®—æ—¶é—´
 						currPeos[i].speed = fabsl(moveLength / (timeGetTime() - prePeos[i].time) * 1000);
 					}	
 				}
@@ -1102,27 +1102,27 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 	}
 
 	/////////////////////////////////////////////////////////////////////////////
-	// ´¦Àí3´óÀàÇé¿ö£º¶à¶Ô1¡¢1¶Ô¶à¡¢1¶Ô1
+	// å¤„ç†3å¤§ç±»æƒ…å†µï¼šå¤šå¯¹1ã€1å¯¹å¤šã€1å¯¹1
 
 	for(i=1; i<matchTag; i++)
 	{
 		matchType = GetMatchType(i, prePeos, currPeos);
 		
-		//1¶Ô1
+		//1å¯¹1
 		switch(matchType)
 		{
 		case MATCH_TYPE_1T1:
-			//ÕÒµ½ÉÏÒ»Ö¡ÖĞÆ¥Åä±êºÅÎª i µÄÇøÓò
+			//æ‰¾åˆ°ä¸Šä¸€å¸§ä¸­åŒ¹é…æ ‡å·ä¸º i çš„åŒºåŸŸ
 			for(j=0; j<MAX_TRACKING_PEOPLE; j++)
 			{
 				if(prePeos[j].matchTag == i)
 				{
-					//ÕÒµ½µ±Ç°Ö¡ÖĞÆ¥Åä±êºÅÎª i µÄÇøÓò
+					//æ‰¾åˆ°å½“å‰å¸§ä¸­åŒ¹é…æ ‡å·ä¸º i çš„åŒºåŸŸ
 					for(k=0; k<MAX_TRACKING_PEOPLE; k++)
 					{
 						if(currPeos[k].matchTag == i)
 						{
-							//ÈôÎªÈº×éµÄ1¶Ô1Æ¥Åä
+							//è‹¥ä¸ºç¾¤ç»„çš„1å¯¹1åŒ¹é…
 							if(prePeos[j].isGroup)	
 							{
 								currPeos[k].isGroup = true;
@@ -1132,7 +1132,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 									currPeos[k].peopleNum[l] = prePeos[j].peopleNum[l];
 								}
 								
-								//¸üĞÂÈËÌåµÄ¶ºÁôÊ±¼äºÍËÙ¶È
+								//æ›´æ–°äººä½“çš„é€—ç•™æ—¶é—´å’Œé€Ÿåº¦
 								for(l=0; l<MAX_TRACKING_PEOPLE; l++)
 								{
 									if(currPeos[k].peopleNum[l] != 0)
@@ -1141,11 +1141,11 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 									}
 								}
 							}
-							else	//ÈôÎªµ¥¸öÈËÌåµÄ1¶Ô1Æ¥Åä
+							else	//è‹¥ä¸ºå•ä¸ªäººä½“çš„1å¯¹1åŒ¹é…
 							{
 								currPeos[k].peopleNum[0] = prePeos[j].peopleNum[0];
 
-								//¸üĞÂÈËÌåµÄ¸ÅÂÊÖ±·½Í¼Ä£ĞÍ
+								//æ›´æ–°äººä½“çš„æ¦‚ç‡ç›´æ–¹å›¾æ¨¡å‹
 								CreateHistBins(histBins, currPeos[k].nConnRgn, currPeos[k].nPixel, fore);
 								UpdatePeople(currPeos[k].peopleNum[0], histBins, currPeos[k].time, currPeos[k].speed, pList);
 							}
@@ -1155,23 +1155,23 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 			}	
 			break;
 
-		case MATCH_TYPE_MT1:	//¶à¶Ô1
+		case MATCH_TYPE_MT1:	//å¤šå¯¹1
 
-			//AfxMessageBox("ĞÎ³ÉÈº×é");
+			//AfxMessageBox("å½¢æˆç¾¤ç»„");
 
 			for(j=0; j<MAX_TRACKING_PEOPLE; j++)
 			{
-				//ÕÒµ½µ±Ç°Ö¡ÖĞĞÎ³ÉµÄÈº×éÇøÓò£¬ĞÂ½¨Èº×éÄ£ĞÍ
+				//æ‰¾åˆ°å½“å‰å¸§ä¸­å½¢æˆçš„ç¾¤ç»„åŒºåŸŸï¼Œæ–°å»ºç¾¤ç»„æ¨¡å‹
 				if(currPeos[j].matchTag == i)
 				{
-					//±ê¼ÇÎªÈº×é£¬²¢¸³ÓèĞÂµÄÈº×é±àºÅ
+					//æ ‡è®°ä¸ºç¾¤ç»„ï¼Œå¹¶èµ‹äºˆæ–°çš„ç¾¤ç»„ç¼–å·
 					currPeos[j].isGroup = true;
 					currPeos[j].groupNum = groupNum;
 
 					m = 0;
 
-					//½«ÉÏÒ»Ö¡×ÓÈº×éÖĞµÄÈËÌå±àºÅ
-					//È«²¿»ã¾Ûµ½ĞÂĞÎ³ÉµÄÈº×éÖĞ
+					//å°†ä¸Šä¸€å¸§å­ç¾¤ç»„ä¸­çš„äººä½“ç¼–å·
+					//å…¨éƒ¨æ±‡èšåˆ°æ–°å½¢æˆçš„ç¾¤ç»„ä¸­
 					for(k=0; k<MAX_TRACKING_PEOPLE; k++)
 					{
 						if(prePeos[k].matchTag == i)
@@ -1192,28 +1192,28 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 			}
 			break;
 
-		case MATCH_TYPE_1TM:	//1¶Ô¶à
+		case MATCH_TYPE_1TM:	//1å¯¹å¤š
 			
-			//ÕÒµ½ÉÏÒ»Ö¡ÖĞ·ÖÁÑµÄÈº×éÇøÓò
+			//æ‰¾åˆ°ä¸Šä¸€å¸§ä¸­åˆ†è£‚çš„ç¾¤ç»„åŒºåŸŸ
 			for(j=0; j<MAX_TRACKING_PEOPLE; j++)
 			{
 				if(prePeos[j].matchTag == i)
 				{	
-					//Ê¹ÓÃ Ö±·½Í¼½»²æÆ¥Åä·¨ ½«ÈËÌåÄ£ĞÍ¶ÔÓ¦µ½ÕâĞ©×ÓÈº×éÖĞ
+					//ä½¿ç”¨ ç›´æ–¹å›¾äº¤å‰åŒ¹é…æ³• å°†äººä½“æ¨¡å‹å¯¹åº”åˆ°è¿™äº›å­ç¾¤ç»„ä¸­
 					for(k=0; k<MAX_TRACKING_PEOPLE; k++)
 					{
 						if(prePeos[j].peopleNum[k] != 0)
 						{
 							double matchValue = 0.0;
 							double max = 0.0;
-							int maxConnIndex;	//Æ¥ÅäÖµ×î´óµÄÇøÓòµÄÊı×éË÷Òı
+							int maxConnIndex;	//åŒ¹é…å€¼æœ€å¤§çš„åŒºåŸŸçš„æ•°ç»„ç´¢å¼•
 
 							for(l=0; l<MAX_TRACKING_PEOPLE; l++)
 							{
 								if(currPeos[l].matchTag == i)
 								{									
-									//¼ÆËã±àºÅÎª prePeos[j].peopleNum[k] µÄÈËÌåÄ£ĞÍ
-									//Óë±àºÅÎª currPeos[l].nConnRgn µÄÁ¬Í¨ÇøÓòµÄÆ¥ÅäÖµ
+									//è®¡ç®—ç¼–å·ä¸º prePeos[j].peopleNum[k] çš„äººä½“æ¨¡å‹
+									//ä¸ç¼–å·ä¸º currPeos[l].nConnRgn çš„è¿é€šåŒºåŸŸçš„åŒ¹é…å€¼
 									matchValue = MatchPeopleToConn(prePeos[j].peopleNum[k], currPeos[l].nConnRgn, currPeos[l].nPixel, pList, fore);
 									
 									if(matchValue > max)
@@ -1224,14 +1224,14 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 								}
 							}
 
-							//½«´ËÈËÌå¶ÔÓ¦µ½Ë÷ÒıÎª l µÄÇøÓò
+							//å°†æ­¤äººä½“å¯¹åº”åˆ°ç´¢å¼•ä¸º l çš„åŒºåŸŸ
 
-							//Èô´ËÇøÓò»¹Ã»ÓĞÈËÌåÓëÖ®¶ÔÓ¦
+							//è‹¥æ­¤åŒºåŸŸè¿˜æ²¡æœ‰äººä½“ä¸ä¹‹å¯¹åº”
 							if(currPeos[maxConnIndex].peopleNum[0] == 0)
 							{
 								currPeos[maxConnIndex].peopleNum[0] = prePeos[j].peopleNum[k];
 							}
-							else //Èô´ËÇøÓòÒÑÓĞÈËÌåÓëÖ®¶ÔÓ¦
+							else //è‹¥æ­¤åŒºåŸŸå·²æœ‰äººä½“ä¸ä¹‹å¯¹åº”
 							{
 								currPeos[maxConnIndex].isGroup = true;
 								for(m=0; m<MAX_TRACKING_PEOPLE; m++)
@@ -1244,17 +1244,17 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 								}
 							}
 						}
-					}//k£¬ÉÏÒ»Ö¡Ä³Èº×éÖĞµÄÃ¿Ò»¸öÈËÌå±àºÅ
+					}//kï¼Œä¸Šä¸€å¸§æŸç¾¤ç»„ä¸­çš„æ¯ä¸€ä¸ªäººä½“ç¼–å·
 
 
-					//Èô×ÓÈº×éÖĞÓĞÈº×é£¬Ôò³õÊ¼»¯ĞÂµÄÈº×éÄ£ĞÍ
+					//è‹¥å­ç¾¤ç»„ä¸­æœ‰ç¾¤ç»„ï¼Œåˆ™åˆå§‹åŒ–æ–°çš„ç¾¤ç»„æ¨¡å‹
 					for(k=0; k<MAX_TRACKING_PEOPLE; k++)
 					{
 						if(currPeos[k].matchTag == i)
 						{
 							if(currPeos[k].isGroup)
 							{
-								//³õÊ¼»¯Èº×éÄ£ĞÍ
+								//åˆå§‹åŒ–ç¾¤ç»„æ¨¡å‹
 								currPeos[k].groupNum = groupNum;
 								groupNum++;
 							}
@@ -1262,25 +1262,25 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 					}
 					
 				}
-			}//j£¬ÉÏÒ»Ö¡ÖĞµÄÈº×é
+			}//jï¼Œä¸Šä¸€å¸§ä¸­çš„ç¾¤ç»„
 			break;
 		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////
-	// ´¦ÀíÌØÊâµÄ2ÀàÇé¿ö£º1¶Ô0¡¢0¶Ô1
+	// å¤„ç†ç‰¹æ®Šçš„2ç±»æƒ…å†µï¼š1å¯¹0ã€0å¯¹1
 
-	//ÕÒµ½ÉÏÒ»Ö¡ÖĞÎ´Æ¥ÅäµÄÇøÓò
+	//æ‰¾åˆ°ä¸Šä¸€å¸§ä¸­æœªåŒ¹é…çš„åŒºåŸŸ
 	for(i=0; i<MAX_TRACKING_PEOPLE; i++)
 	{
 		if(prePeos[i].isPeople)
 		{
-			//Èô³öÏÖÎ´Æ¥ÅäµÄÏÖÏó£¬Ôò´¥·¢ÊÂ¼ş£ºÓĞÈË´Ó³¡¾°ÖĞÏûÊ§
+			//è‹¥å‡ºç°æœªåŒ¹é…çš„ç°è±¡ï¼Œåˆ™è§¦å‘äº‹ä»¶ï¼šæœ‰äººä»åœºæ™¯ä¸­æ¶ˆå¤±
 			if(prePeos[i].matchTag == 0)
 			{
 				if(prePeos[i].isGroup)
 				{
-					//É¾³ıÈº×éÖĞ°üº¬µÄÈËÌå
+					//åˆ é™¤ç¾¤ç»„ä¸­åŒ…å«çš„äººä½“
 					for(j=0; j<MAX_TRACKING_PEOPLE; j++)
 					{
 						if(prePeos[i].peopleNum[j] != 0)
@@ -1291,24 +1291,24 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 				} 
 				else
 				{
-					//É¾³ı´ËÈË
+					//åˆ é™¤æ­¤äºº
 					DeletePeople(prePeos[i].peopleNum[0], pList);
 				}
 			}
 		}
 	}
 
-	//ÕÒµ½µ±Ç°Ö¡ÖĞÎ´Æ¥ÅäµÄÇøÓò
+	//æ‰¾åˆ°å½“å‰å¸§ä¸­æœªåŒ¹é…çš„åŒºåŸŸ
 	for(i=0; i<MAX_TRACKING_PEOPLE; i++)
 	{
 		if(currPeos[i].isPeople)
 		{
 			if(currPeos[i].matchTag == 0)
 			{				
-				//Îª´ËÇøÓò¸³ÓèĞÂµÄÈËÌå±àºÅ
+				//ä¸ºæ­¤åŒºåŸŸèµ‹äºˆæ–°çš„äººä½“ç¼–å·
 				currPeos[i].peopleNum[0] = peopleNum;
 
-				//Ôö¼ÓÈËÌåÄ£ĞÍ
+				//å¢åŠ äººä½“æ¨¡å‹
 				CreateHistBins(histBins, currPeos[i].nConnRgn, currPeos[i].nPixel, fore);
 				AddPeople(currPeos[i].peopleNum[0], histBins, currPeos[i].time, pList);
 				peopleNum++;
@@ -1316,7 +1316,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 		}
 	}
 
-	// ÇøÓò¼ì²â
+	// åŒºåŸŸæ£€æµ‹
 	for(i=0; i<MAX_TRACKING_PEOPLE; i++)
 	{
 		if(currPeos[i].isPeople)
@@ -1327,7 +1327,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 					&& prePeos[j].matchTag == currPeos[i].matchTag)
 					
 				{
-					// ÉÏÒ»Ö¡´ËÈËÎ´½øÈëÇøÓò£¬
+					// ä¸Šä¸€å¸§æ­¤äººæœªè¿›å…¥åŒºåŸŸï¼Œ
 					if(prePeos[j].areaState == PEOPLE_NOTIN)
 					{
 						if (isRectConfirmed)
@@ -1339,12 +1339,12 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 							isEntered = checkEnterMultiRect(&currPeos[i]);
 						}
 
-						// ÕâÒ»Ö¡´ËÈË½øÈëÇøÓò
+						// è¿™ä¸€å¸§æ­¤äººè¿›å…¥åŒºåŸŸ
 						if (isEntered)
 						{
 							currPeos[i].areaState = PEOPLE_IN;
 							
-							// ÏÔÊ¾¸ú×Ù½á¹û
+							// æ˜¾ç¤ºè·Ÿè¸ªç»“æœ
 							CEdit* pEdit = (CEdit*)AfxGetApp()->m_pMainWnd->GetDlgItem(IDC_EDIT_RESULT + finalRectNum);
 							pEdit->GetWindowText(originText);
 							time1 = (int)(g_frameNum * g_frameTimeGap);
@@ -1359,22 +1359,22 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 								pEdit->SetWindowText(originText + newText);
 							}
 						}
-						// ÕâÒ»Ö¡´ËÈËÈÔÎ´½øÈëÇøÓò
+						// è¿™ä¸€å¸§æ­¤äººä»æœªè¿›å…¥åŒºåŸŸ
 						else	
 						{
-							currPeos[i].areaState = PEOPLE_NOTIN;	// ±£³ÖÎ´½øÈë×´Ì¬
+							currPeos[i].areaState = PEOPLE_NOTIN;	// ä¿æŒæœªè¿›å…¥çŠ¶æ€
 						}
 					}
-					// ÉÏÒ»Ö¡´ËÈËÒÑ½øÈëÇøÓò£¬
+					// ä¸Šä¸€å¸§æ­¤äººå·²è¿›å…¥åŒºåŸŸï¼Œ
 					else if(prePeos[j].areaState == PEOPLE_IN)
 					{
-						// ÕâÒ»Ö¡´ËÈËÀë¿ªÇøÓò
+						// è¿™ä¸€å¸§æ­¤äººç¦»å¼€åŒºåŸŸ
 						if(checkLeaveRect(detectRect[finalRectNum], &currPeos[i]))
 						{
 							//firstFlag = 1;
 							currPeos[i].areaState = PEOPLE_OUT;
 							
-							// ÏÔÊ¾¸ú×Ù½á¹û
+							// æ˜¾ç¤ºè·Ÿè¸ªç»“æœ
 							CEdit* pEdit = (CEdit*)AfxGetApp()->m_pMainWnd->GetDlgItem(IDC_EDIT_RESULT + finalRectNum);
 							pEdit->GetWindowText(originText);
 							time2 = (int)(g_frameNum * g_frameTimeGap);
@@ -1382,13 +1382,13 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 							newText.Format("P%d leaves at 00:%02d:%02d:%02d\r\n", currPeos[i].peopleNum[0], time2 / 3600, time2 / 60, time2 % 60);
 							pEdit->SetWindowText(originText + newText);
 						}
-						// ÕâÒ»Ö¡´ËÈËÈÔÔÚÇøÓòÖĞ
+						// è¿™ä¸€å¸§æ­¤äººä»åœ¨åŒºåŸŸä¸­
 						else
 						{
-							currPeos[i].areaState = PEOPLE_IN;	// ±£³Ö½øÈë×´Ì¬
+							currPeos[i].areaState = PEOPLE_IN;	// ä¿æŒè¿›å…¥çŠ¶æ€
 						}
 					}
-					// ÈôÉÏÒ»Ö¡´ËÈËÒÑ¾­Àë¿ªÇøÓò£¬Ôò±£³ÖÀë¿ª×´Ì¬
+					// è‹¥ä¸Šä¸€å¸§æ­¤äººå·²ç»ç¦»å¼€åŒºåŸŸï¼Œåˆ™ä¿æŒç¦»å¼€çŠ¶æ€
 					else if(prePeos[j].areaState == PEOPLE_OUT)
 					{
 						currPeos[i].areaState = PEOPLE_OUT;
@@ -1398,7 +1398,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 		}
 	}
 
-	//µ±Ç°Ö¡µÄÊı¾İ¸²¸ÇÉÏÒ»Ö¡µÄÊı¾İ
+	//å½“å‰å¸§çš„æ•°æ®è¦†ç›–ä¸Šä¸€å¸§çš„æ•°æ®
 	for(i=0; i<MAX_TRACKING_PEOPLE; i++)
 	{
 		prePeos[i].up = currPeos[i].up;
@@ -1434,7 +1434,7 @@ void MatchPeople(pplConn* prePeos, pplConn* currPeos, foreImg* fore, pplList pLi
 	}
 }
 
-// ÅĞ¶ÏÈËÌå¿òÊÇ·ñµÚÒ»´Î½øÈëÄ³¼ì²â¿ò
+// åˆ¤æ–­äººä½“æ¡†æ˜¯å¦ç¬¬ä¸€æ¬¡è¿›å…¥æŸæ£€æµ‹æ¡†
 bool checkEnterRect(_DetectRect rect, pplConn* people)
 {
 	float i;
@@ -1449,7 +1449,7 @@ bool checkEnterRect(_DetectRect rect, pplConn* people)
 		return false;
 	}
 
-	// Ïß¶ÎºÍÈËÌå×ó±ß½çÏà½»
+	// çº¿æ®µå’Œäººä½“å·¦è¾¹ç•Œç›¸äº¤
 	for (i=0.0f; i<8; i+=0.01f)
 	{
 		if (people->direction > 0)
@@ -1477,13 +1477,13 @@ bool checkEnterRect(_DetectRect rect, pplConn* people)
 	return false;
 }
 
-// ÅĞ¶ÏÈËÌåÊÇ·ñ½øÈëËùÓĞµÄ¼ì²â¿òÖĞµÄÄ³¸ö
-// Èô¼ì²âµ½½øÈë£¬Ôò½«´Ë¼ì²â¿òµÄ±àºÅ´æÈëÈ«¾Ö±äÁ¿ÖĞ
+// åˆ¤æ–­äººä½“æ˜¯å¦è¿›å…¥æ‰€æœ‰çš„æ£€æµ‹æ¡†ä¸­çš„æŸä¸ª
+// è‹¥æ£€æµ‹åˆ°è¿›å…¥ï¼Œåˆ™å°†æ­¤æ£€æµ‹æ¡†çš„ç¼–å·å­˜å…¥å…¨å±€å˜é‡ä¸­
 bool checkEnterMultiRect(pplConn* people)
 {
 	int i;
 	
-	// ±éÀúËùÓĞ½Úµã
+	// éå†æ‰€æœ‰èŠ‚ç‚¹
 	for(i=0; i<16; i++)
 	{
 		if(checkEnterRect(detectRect[i], people))
@@ -1497,10 +1497,10 @@ bool checkEnterMultiRect(pplConn* people)
 	return false;
 }
 
-// ÅĞ¶ÏÈËÊÇ·ñÀë¿ªÄ³Ïß¶Î
+// åˆ¤æ–­äººæ˜¯å¦ç¦»å¼€æŸçº¿æ®µ
 bool checkLeaveLine(_Line line, pplConn* people)
 {
-	// ºÍÈËåµÄÓÒ±ß½ç²»Ïà½»£??ÒÓÒ±ß½çÔÚÏß¶ÎµÄ×ó±ŞÌ
+	// å’Œäººå®“æŒ å†¶å‘“ç»®å¹Œå˜Ÿå”¬??çŸ£å†¶å‘“ç¼­è°™å¨è”šæ·–èŸŠå°¢
 	if (people->direction > 0)
 	{
 		return (((people->right <= line.minX)
@@ -1517,7 +1517,7 @@ bool checkLeaveLine(_Line line, pplConn* people)
 	}
 }
 
-// ¼ÆËãÈËÌåÓÒ±ß½çºÍÏß¶ÎµÄ×îĞ¡¾àÀë
+// è®¡ç®—äººä½“å³è¾¹ç•Œå’Œçº¿æ®µçš„æœ€å°è·ç¦»
 double calDistance(_Line line, pplConn* people)
 {
 	double distanceA = 0.0;
@@ -1529,7 +1529,7 @@ double calDistance(_Line line, pplConn* people)
 	return min(distanceA, distanceB);
 }
 
-// ÅĞ¶ÏÈËÊÇ·ñÀë¿ªÄ³¼ì²â¿ò
+// åˆ¤æ–­äººæ˜¯å¦ç¦»å¼€æŸæ£€æµ‹æ¡†
 bool checkLeaveRect(_DetectRect rect, pplConn* people)
 {
 	int i;
@@ -1546,7 +1546,7 @@ bool checkLeaveRect(_DetectRect rect, pplConn* people)
 		}
 	}
 
-	if (leaveCount == 3)	// Àë¿ª3ÌõÏß¶Î£¬±íÊ¾ÍêÈ«Àë¿ª¼ì²â¿ò£¬¼ÆÊ±¿ªÊ¼
+	if (leaveCount == 3)	// ç¦»å¼€3æ¡çº¿æ®µï¼Œè¡¨ç¤ºå®Œå…¨ç¦»å¼€æ£€æµ‹æ¡†ï¼Œè®¡æ—¶å¼€å§‹
 	{
 		for(i=0; i<3; i++)
 		{
@@ -1568,12 +1568,12 @@ bool checkLeaveRect(_DetectRect rect, pplConn* people)
 	}
 }
   
-//ÌáÈ¡Á¬Í¨ÇøÓòµÄĞÅÏ¢
+//æå–è¿é€šåŒºåŸŸçš„ä¿¡æ¯
 void GetConnsInfo(foreImg* fore, connRgn* conns)
 {
 	int i, j;
 
-	//³õÊ¼»¯µ±Ç°Ö¡µÄÁ¬Í¨ÇøÓòµÄĞÅÏ¢
+	//åˆå§‹åŒ–å½“å‰å¸§çš„è¿é€šåŒºåŸŸçš„ä¿¡æ¯
 	for(i=0; i<MAX_CONN_RGN; i++)
 	{
 		conns[i].nPixel = 0;
@@ -1583,51 +1583,51 @@ void GetConnsInfo(foreImg* fore, connRgn* conns)
 		conns[i].down = 0;
 	}
 	
-	//Îª½á¹¹ÌåÊı×éÌî³äĞÅÏ¢
+	//ä¸ºç»“æ„ä½“æ•°ç»„å¡«å……ä¿¡æ¯
 	for(i=0; i<HEIGHT; i++)
 	{
 		for(j=0; j<WIDTH; j++)
 		{
-			//Èô´ËÏñËØ±»±ê¼Ç
+			//è‹¥æ­¤åƒç´ è¢«æ ‡è®°
 			if(fore[i*WIDTH+j].isNumbered)
 			{
-				//»ñÈ¡Á¬Í¨ÇøÓòµÄ±àºÅ
+				//è·å–è¿é€šåŒºåŸŸçš„ç¼–å·
 				char index = fore[i*WIDTH+j].nConnRgn;
 				
-				//ÀÛ¼ÓÏñËØÊı
+				//ç´¯åŠ åƒç´ æ•°
 				conns[index].nPixel++;
 				
-				//¸³ÓèÁ¬Í¨ÇøÓòµÄ±àºÅ
+				//èµ‹äºˆè¿é€šåŒºåŸŸçš„ç¼–å·
 				conns[index].nConnRgn = index;
 				
-				//¸üĞÂ±ß½çÖµ
-				if(i < conns[index].up)		//ÉÏ±ß½ç
+				//æ›´æ–°è¾¹ç•Œå€¼
+				if(i < conns[index].up)		//ä¸Šè¾¹ç•Œ
 				{
 					conns[index].up = i;
 				}
-				if(i > conns[index].down)	//ÏÂ±ß½ç
+				if(i > conns[index].down)	//ä¸‹è¾¹ç•Œ
 				{
 					conns[index].down = i;
 				}
-				if(j < conns[index].left)	//×ó±ß½ç
+				if(j < conns[index].left)	//å·¦è¾¹ç•Œ
 				{
 					conns[index].left = j;
 				}
-				if(j > conns[index].right)	//ÓÒ±ß½ç
+				if(j > conns[index].right)	//å³è¾¹ç•Œ
 				{
 					conns[index].right = j;
 				}
 			}
-		}//ÁĞ
-	}//ĞĞ
+		}//åˆ—
+	}//è¡Œ
 }
 
-//ÌáÈ¡Á¬Í¨ÇøÓòµÄĞÅÏ¢
+//æå–è¿é€šåŒºåŸŸçš„ä¿¡æ¯
 void GetConnsInfoByTour(struct tour* tours, struct connRgn* conns)
 {
 	int i;
 	
-	//³õÊ¼»¯µ±Ç°Ö¡µÄÁ¬Í¨ÇøÓòµÄĞÅÏ¢
+	//åˆå§‹åŒ–å½“å‰å¸§çš„è¿é€šåŒºåŸŸçš„ä¿¡æ¯
 	for(i=0; i<MAX_CONN_RGN; i++)
 	{
 		conns[i].nPixel = 0;
@@ -1645,35 +1645,35 @@ void GetConnsInfoByTour(struct tour* tours, struct connRgn* conns)
 		
 		conns[index].nConnRgn = index;
 		
-		//¸üĞÂ±ß½çÖµ
-		if(tours[i].rowNum < conns[index].up)	//ÉÏ±ß½ç
+		//æ›´æ–°è¾¹ç•Œå€¼
+		if(tours[i].rowNum < conns[index].up)	//ä¸Šè¾¹ç•Œ
 		{
 			conns[index].up = tours[i].rowNum;
 		}
-		if(tours[i].rowNum > conns[index].down)	//ÏÂ±ß½ç
+		if(tours[i].rowNum > conns[index].down)	//ä¸‹è¾¹ç•Œ
 		{
 			conns[index].down = tours[i].rowNum;
 		}
-		if(tours[i].start < conns[index].left)	//×ó±ß½ç
+		if(tours[i].start < conns[index].left)	//å·¦è¾¹ç•Œ
 		{
 			conns[index].left = tours[i].start;
 		}
-		if(tours[i].end > conns[index].right)	//ÓÒ±ß½ç
+		if(tours[i].end > conns[index].right)	//å³è¾¹ç•Œ
 		{
 			conns[index].right = tours[i].end;
 		}
 	}
 }
 
-//ÌáÈ¡ÈËÌåÇøÓòµÄĞÅÏ¢
+//æå–äººä½“åŒºåŸŸçš„ä¿¡æ¯
 void GetPeopleConns(connRgn* conns, pplConn* currPeos, foreImg* fore) 
 {
 	int i, j, k;
 	
-	//±ê¼ÇÎªÈËÌåÇøÓò£¬¼ÆËãÃæ»ı
+	//æ ‡è®°ä¸ºäººä½“åŒºåŸŸï¼Œè®¡ç®—é¢ç§¯
 	for(i=0,j=0; i<MAX_CONN_RGN; i++)
 	{
-		//ÈôÏñËØÊıÄ¿´óÓÚãĞÖµ£¬Ôò¶ÔÓ¦ÎªÈËÌå
+		//è‹¥åƒç´ æ•°ç›®å¤§äºé˜ˆå€¼ï¼Œåˆ™å¯¹åº”ä¸ºäººä½“
 		if(conns[i].nPixel > THRESHOLD_HUMAN_PIXEL_NUM)
 		{
 			currPeos[j].isPeople = true;
@@ -1685,17 +1685,17 @@ void GetPeopleConns(connRgn* conns, pplConn* currPeos, foreImg* fore)
 			currPeos[j].nPixel = conns[i].nPixel;
 			currPeos[j].time = timeGetTime();
 			
-			//¼ÆËã±ß½ç¿òÃæ»ı
+			//è®¡ç®—è¾¹ç•Œæ¡†é¢ç§¯
 			currPeos[j].area = (conns[i].down - conns[i].up) * (conns[i].right - conns[i].left);
 			
 			/* author:hustlzp date:2012/7/3 */
-			//¼ÆËãÃ¿Ò»¸öÇøÓòµÄÉ«²ÊÖ±·½Í¼¸ÅÂÊÄ£ĞÍ
+			//è®¡ç®—æ¯ä¸€ä¸ªåŒºåŸŸçš„è‰²å½©ç›´æ–¹å›¾æ¦‚ç‡æ¨¡å‹
 			for(k=0; k<4096; k++)
 			{
 				currPeos[j].histBins[k] = (double)0;
 			}
 			
-			//¼ÆËãÑÕÉ«Ö±·½Í¼
+			//è®¡ç®—é¢œè‰²ç›´æ–¹å›¾
 			for(k=0; k<PIXEL_NUM; k++)
 			{
 				if((fore[k].nConnRgn == currPeos[j].nConnRgn) && (fore[k].isFore))
@@ -1705,7 +1705,7 @@ void GetPeopleConns(connRgn* conns, pplConn* currPeos, foreImg* fore)
 				}
 			}
 			
-			//¼ÆËã¸ÅÂÊÖ±·½Í¼
+			//è®¡ç®—æ¦‚ç‡ç›´æ–¹å›¾
 			for(k=0; k<4096; k++)
 			{
 				currPeos[j].histBins[k] /= currPeos[j].nPixel;
@@ -1717,13 +1717,13 @@ void GetPeopleConns(connRgn* conns, pplConn* currPeos, foreImg* fore)
 	}
 }
 
-//»ñÈ¡Ê±¼ä²îÖµ£¨µ¥Î»£ºus£©
+//è·å–æ—¶é—´å·®å€¼ï¼ˆå•ä½ï¼šusï¼‰
 int GetTimeDiff(LARGE_INTEGER t2, LARGE_INTEGER t1, LARGE_INTEGER tc) 
 {
 	return (int)((double)(t2.QuadPart - t1.QuadPart) / (double)tc.QuadPart * 1000000);
 }
 
-//»ñÈ¡¾²Ö¹±³¾°Óë¶¯Ì¬±³¾°µÄ·ÖË®ÁëÖ¡Êı
+//è·å–é™æ­¢èƒŒæ™¯ä¸åŠ¨æ€èƒŒæ™¯çš„åˆ†æ°´å²­å¸§æ•°
 int GetFrameWaterShed(int videoType)
 {
 	int waterShed;
@@ -1744,7 +1744,7 @@ int GetFrameWaterShed(int videoType)
 	return waterShed;
 }
 
-//»ñÈ¡ÊÓÆµÎÄ¼şµØÖ·
+//è·å–è§†é¢‘æ–‡ä»¶åœ°å€
 CString GetFilePath(int videoType)
 {
 	//CString rootPath("");
@@ -1777,7 +1777,7 @@ CString GetFilePath(int videoType)
 	return filePath;
 }
 
-//´ÓÄ³µã¿ªÊ¼±ê¼Ç´ËÁ¬Í¨ÇøÓò
+//ä»æŸç‚¹å¼€å§‹æ ‡è®°æ­¤è¿é€šåŒºåŸŸ
 void label(foreImg* fore, int i, int j, int nConnNum)
 {
 	int k, l;
@@ -1785,10 +1785,10 @@ void label(foreImg* fore, int i, int j, int nConnNum)
 	{
 		for(l=0; l<3; l++)
 		{
-			//Èô³¬³ö±ß½ç£¬Ôò·µ»Ø
+			//è‹¥è¶…å‡ºè¾¹ç•Œï¼Œåˆ™è¿”å›
 			if((i-1+k) < 0 || (i-1+k)>= HEIGHT || (j-1+l) < 0 || (j-1+l) >= WIDTH)
 				break; 
-			//±ê¼ÇÖĞĞÄµã
+			//æ ‡è®°ä¸­å¿ƒç‚¹
 			if((k == 1) && (l == 1))
 			{
 				fore[(i-1+k)*WIDTH+j-1+l].nConnRgn = nConnNum;
@@ -1796,14 +1796,14 @@ void label(foreImg* fore, int i, int j, int nConnNum)
 			}
 			else if(fore[(i-1+k)*WIDTH+j-1+l].isFore && (fore[(i-1+k)*WIDTH+j-1+l].isNumbered == false))
 			{
-				//¿ªÊ¼ÏÂÒ»ÂÖ±ê¼Ç
+				//å¼€å§‹ä¸‹ä¸€è½®æ ‡è®°
 				label(fore, i-1+k, j-1+l, nConnNum);
 			}
 		}
 	}
 }
 
-//±ê¼ÇËã·¨
+//æ ‡è®°ç®—æ³•
 void LabelConnRgn(foreImg* fore)
 {
 	int i, j;
@@ -1813,7 +1813,7 @@ void LabelConnRgn(foreImg* fore)
 	{
 		for(j=0; j<WIDTH; j++)
 		{
-			//Èô´ËµãÎªÇ°¾°ÇÒÎ´±»±ê¼Ç£¬Ôò¿ªÊ¼´Ë´Î±ê¼Ç
+			//è‹¥æ­¤ç‚¹ä¸ºå‰æ™¯ä¸”æœªè¢«æ ‡è®°ï¼Œåˆ™å¼€å§‹æ­¤æ¬¡æ ‡è®°
 			if(fore[i*WIDTH+j].isFore && (fore[i*WIDTH+j].isNumbered == false))
 			{
 				label(fore, i, j, nConnNum);
@@ -1823,12 +1823,12 @@ void LabelConnRgn(foreImg* fore)
 	}
 }
 
-//»æÖÆÇ°¾°ÇøÓòµ½ IplImage ½á¹¹ÖĞ
+//ç»˜åˆ¶å‰æ™¯åŒºåŸŸåˆ° IplImage ç»“æ„ä¸­
 void DrawForeImg(foreImg * fore, IplImage* pForeImg)
 {
 	int i;
 	
-	//»æÖÆÁ¬Í¨ÇøÓò
+	//ç»˜åˆ¶è¿é€šåŒºåŸŸ
 	for(i=0; i<PIXEL_BYTES_NUM; i+=3)
 	{
 		//if(fore[i/3].isFore && fore[i/3].isNumbered)
@@ -1841,12 +1841,12 @@ void DrawForeImg(foreImg * fore, IplImage* pForeImg)
 	}
 }
 
-//»æÖÆÄ³¸öÈËÌåµÄÇ°¾°Á¬Í¨ÇøÓò
+//ç»˜åˆ¶æŸä¸ªäººä½“çš„å‰æ™¯è¿é€šåŒºåŸŸ
 void DrawPeopleForeImg(foreImg * fore, IplImage* pForeImg, char nConnRgn)
 {
 	int i;
 	
-	//»æÖÆÁ¬Í¨ÇøÓò
+	//ç»˜åˆ¶è¿é€šåŒºåŸŸ
 	for(i=0; i<PIXEL_BYTES_NUM; i+=3)
 	{
 		if(fore[i/3].nConnRgn == nConnRgn && fore[i/3].isNumbered)
@@ -1858,7 +1858,7 @@ void DrawPeopleForeImg(foreImg * fore, IplImage* pForeImg, char nConnRgn)
 	}
 }
 
-//»æÖÆÈËÌå±àºÅ
+//ç»˜åˆ¶äººä½“ç¼–å·
 void DrawPeopleNum(IplImage* pForeImg, int peopleNum, int left, int bottom) 
 {
 	CvFont font;
@@ -1868,7 +1868,7 @@ void DrawPeopleNum(IplImage* pForeImg, int peopleNum, int left, int bottom)
 	cvPutText(pForeImg, str.GetBuffer(0), cvPoint(left, bottom), &font, CV_RGB(255,255,255));
 }
 
-//»æÖÆÈº×é±àºÅ
+//ç»˜åˆ¶ç¾¤ç»„ç¼–å·
 void DrawGroupNum(IplImage* pForeImg, int groupNum, int* peopleNum, int left, int bottom)
 {
 	int i;
@@ -1890,16 +1890,16 @@ void DrawGroupNum(IplImage* pForeImg, int groupNum, int* peopleNum, int left, in
 	cvPutText(pForeImg, str.GetBuffer(0), cvPoint(left, bottom), &font, CV_RGB(255,255,255));
 }
 
-//»æÖÆÈËÌåµÄÔË¶¯·½Ïò
+//ç»˜åˆ¶äººä½“çš„è¿åŠ¨æ–¹å‘
 void DrawDirection(IplImage* pForeImg, int direction, int left, int bottom) 
 {
 	CvFont font;
 	CString str;
 	
-	//³õÊ¼»¯×ÖÌå
+	//åˆå§‹åŒ–å­—ä½“
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 0.4, 0.4, 0, 1);
 	
-	//²»Í¬µÄÒÆ¶¯·½Ïò£¬ÏÔÊ¾²»Í¬µÄ¼ÇºÅ
+	//ä¸åŒçš„ç§»åŠ¨æ–¹å‘ï¼Œæ˜¾ç¤ºä¸åŒçš„è®°å·
 	if(direction > 0)
 	{
 		str = "<-";
@@ -1910,13 +1910,13 @@ void DrawDirection(IplImage* pForeImg, int direction, int left, int bottom)
 	cvPutText(pForeImg, str.GetBuffer(0), cvPoint(left, bottom), &font, CV_RGB(0,0,0));
 }
 
-//»æÖÆÈËÌåËÙ¶È
+//ç»˜åˆ¶äººä½“é€Ÿåº¦
 void DrawSpeed(IplImage* pForeImg, double speed, int left, int bottom)
 {
 	CvFont font;
 	CString str;
 	
-	//³õÊ¼»¯×ÖÌå
+	//åˆå§‹åŒ–å­—ä½“
 	cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, 0.4, 0.4, 0, 1);
 
 	str.Format("%.1f", speed);
@@ -1924,12 +1924,12 @@ void DrawSpeed(IplImage* pForeImg, double speed, int left, int bottom)
 	cvPutText(pForeImg, str.GetBuffer(0), cvPoint(left, bottom), &font, CV_RGB(0,255,255));
 }
 
-//»æÆ±ß½ç¿ñÌ
+//ç»˜ç¥¨å‘“ç¼ˆè£‰
 void DrawRect(IplImage* img, int up, int down, int left, int right) 
 {
 	int	i, j;
 	
-	//»æÖÆ×óÓÒ±ß½ç
+	//ç»˜åˆ¶å·¦å³è¾¹ç•Œ
 	for(i=up; i<down; i++)
 	{
 		(*img).imageData[i*WIDTH*3 + left*3] = (char)255;
@@ -1941,7 +1941,7 @@ void DrawRect(IplImage* img, int up, int down, int left, int right)
 		(*img).imageData[i*WIDTH*3 + right*3+2] = (char)255;
 	}
 	
-	//»æÖÆÉÏÏÂ±ß½ç
+	//ç»˜åˆ¶ä¸Šä¸‹è¾¹ç•Œ
 	for(j=left; j<right; j++)
 	{
 		(*img).imageData[up*WIDTH*3 + j*3] = (char)255;
@@ -1954,14 +1954,14 @@ void DrawRect(IplImage* img, int up, int down, int left, int right)
 	}
 }
 
-//»æÖÆÖĞĞÄµã
+//ç»˜åˆ¶ä¸­å¿ƒç‚¹
 void DrawCentroid(IplImage* img, int up, int down, int left, int right)
 {
-	//¼ÆËãÖĞµã×ø±ê
+	//è®¡ç®—ä¸­ç‚¹åæ ‡
 	int midX = (left + right) / 2;
 	int midY = (up + down) / 2;
 	
-	//»æÖÆÖĞµã
+	//ç»˜åˆ¶ä¸­ç‚¹
 	(*img).imageData[midY*WIDTH*3 + midX*3] = (char)0;
 	(*img).imageData[midY*WIDTH*3 + midX*3+1] = (char)0;   
 	(*img).imageData[midY*WIDTH*3 + midX*3+2] = (char)255;
@@ -1971,7 +1971,7 @@ void DrawCentroid(IplImage* img, int up, int down, int left, int right)
 #define COLOR_GREEN  1
 #define COLOR_RED    2
 
-// »æÖÆÏß¶Î
+// ç»˜åˆ¶çº¿æ®µ
 void drawLine(_Line line, IplImage* pFrame, int color)
 {
 	int i, j;
@@ -2011,7 +2011,7 @@ void drawLine(_Line line, IplImage* pFrame, int color)
 	}
 }
 
-// »æÖÆµ¥¸ö¼ì²â¿ò
+// ç»˜åˆ¶å•ä¸ªæ£€æµ‹æ¡†
 void drawRect(_DetectRect* rect, IplImage* pFrame, int drawMode)
 {
 	int i;
@@ -2039,7 +2039,7 @@ void drawRect(_DetectRect* rect, IplImage* pFrame, int drawMode)
 	}
 }
 
-// »æÖÆËùÓĞ¼ì²â¿ò
+// ç»˜åˆ¶æ‰€æœ‰æ£€æµ‹æ¡†
 void drawAllRects(IplImage* pFrame)
 {
 	int i;
@@ -2049,7 +2049,7 @@ void drawAllRects(IplImage* pFrame)
 	{
 		if(detectRect[i].isDrew == 1)
 		{
-			// ÈôÒÑÈ·¶¨×îÖÕµÄ¼ì²â¿ò£¬Ôò»æÖÆÎªºìÉ«
+			// è‹¥å·²ç¡®å®šæœ€ç»ˆçš„æ£€æµ‹æ¡†ï¼Œåˆ™ç»˜åˆ¶ä¸ºçº¢è‰²
 			if(isRectConfirmed && i == finalRectNum)
 			{
 				drawRect(&detectRect[i], pFrame, 2);
@@ -2062,28 +2062,28 @@ void drawAllRects(IplImage* pFrame)
 	}
 }
 
-//»æÖÆÈËÌåĞÅÏ¢
+//ç»˜åˆ¶äººä½“ä¿¡æ¯
 void DrawPeople(pplConn* ppl, foreImg* fore, IplImage* pFrame) 
 {
 	int i;
 
-	//»æÖÆÈËÌåĞÅÏ¢£º±ß½ç¿ò¡¢ÖĞĞÄµã¡¢±àºÅ¡¢ÔË¶¯·½Ïò
+	//ç»˜åˆ¶äººä½“ä¿¡æ¯ï¼šè¾¹ç•Œæ¡†ã€ä¸­å¿ƒç‚¹ã€ç¼–å·ã€è¿åŠ¨æ–¹å‘
 	for(i=0; i<MAX_TRACKING_PEOPLE; i++)
 	{
 		if(ppl[i].isPeople)
 		{
-			//»æÖÆÈËÌåµÄÇ°¾°ÏñËØ
+			//ç»˜åˆ¶äººä½“çš„å‰æ™¯åƒç´ 
 			//DrawPeopleForeImg(fore, pForeImg, ppl[i].nConnRgn);
-			//»æÖÆ±ß½ç¿ò
+			//ç»˜åˆ¶è¾¹ç•Œæ¡†
 			DrawRect(pFrame, ppl[i].up, ppl[i].down, ppl[i].left, ppl[i].right);
-			//»æÖÆÖĞĞÄµã
+			//ç»˜åˆ¶ä¸­å¿ƒç‚¹
 			//DrawCentroid(pForeImg, ppl[i].up, ppl[i].down, ppl[i].left, ppl[i].right);
-			//»æÖÆÔË¶¯·½Ïò
+			//ç»˜åˆ¶è¿åŠ¨æ–¹å‘
 			DrawDirection(pFrame, ppl[i].direction, ppl[i].left, ppl[i].up-15);
-			//»æÖÆÔË¶¯ËÙ¶È
+			//ç»˜åˆ¶è¿åŠ¨é€Ÿåº¦
 			//DrawSpeed(pFrame, ppl[i].speed, ppl[i].left, ppl[i].up-27);
 
-			//»æÖÆÈËÌå±àºÅ
+			//ç»˜åˆ¶äººä½“ç¼–å·
 			if(ppl[i].isGroup)
 			{
 				DrawGroupNum(pFrame, ppl[i].groupNum, ppl[i].peopleNum, ppl[i].left, ppl[i].up-3);
@@ -2098,7 +2098,7 @@ void DrawPeople(pplConn* ppl, foreImg* fore, IplImage* pFrame)
 	drawAllRects(pFrame);
 }
 
-//ÏÔÊ¾Í¼Æ¬
+//æ˜¾ç¤ºå›¾ç‰‡
 void ShowImg(IplImage* pForeImage, int repID) 
 {
 	CFinalTestDlg *mWin = (CFinalTestDlg *)AfxGetApp()->m_pMainWnd;
