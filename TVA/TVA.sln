@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVA", "TVA\TVA.csproj", "{C327773F-DA5B-4240-9F67-A26A3AFC9ED4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C327773F-DA5B-4240-9F67-A26A3AFC9ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C327773F-DA5B-4240-9F67-A26A3AFC9ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C327773F-DA5B-4240-9F67-A26A3AFC9ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C327773F-DA5B-4240-9F67-A26A3AFC9ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = TVA\TVA.csproj
+	EndGlobalSection
+EndGlobal
