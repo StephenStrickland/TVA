@@ -1,0 +1,64 @@
+# Microsoft Developer Studio Generated Dependency File, included by FinalTest.mak
+
+.\CameraDS.cpp : \
+	".\CameraDS.h"\
+	".\directshow\include\audevcod.h"\
+	".\directshow\include\dshow.h"\
+	".\directshow\include\dxtrans.h"\
+	".\directshow\include\qedit.h"\
+	"c:\program files\opencv\cxcore\include\cvver.h"\
+	"c:\program files\opencv\cxcore\include\cxcore.h"\
+	"c:\program files\opencv\cxcore\include\cxcore.hpp"\
+	"c:\program files\opencv\cxcore\include\cxerror.h"\
+	"c:\program files\opencv\cxcore\include\cxtypes.h"\
+	
+
+.\FinalTest.cpp : \
+	".\CameraDS.h"\
+	".\directshow\include\audevcod.h"\
+	".\directshow\include\dshow.h"\
+	".\directshow\include\dxtrans.h"\
+	".\directshow\include\qedit.h"\
+	".\FinalTest.h"\
+	".\FinalTestDlg.h"\
+	"c:\program files\opencv\cv\include\cv.h"\
+	"c:\program files\opencv\cv\include\cv.hpp"\
+	"c:\program files\opencv\cv\include\cvcompat.h"\
+	"c:\program files\opencv\cv\include\cvtypes.h"\
+	"c:\program files\opencv\cxcore\include\cvver.h"\
+	"c:\program files\opencv\cxcore\include\cxcore.h"\
+	"c:\program files\opencv\cxcore\include\cxcore.hpp"\
+	"c:\program files\opencv\cxcore\include\cxerror.h"\
+	"c:\program files\opencv\cxcore\include\cxtypes.h"\
+	"c:\program files\opencv\otherlibs\highgui\highgui.h"\
+	
+
+.\FinalTest.rc : \
+	".\res\FinalTest.ico"\
+	".\res\FinalTest.rc2"\
+	
+
+.\FinalTestDlg.cpp : \
+	".\CameraDS.h"\
+	".\directshow\include\audevcod.h"\
+	".\directshow\include\dshow.h"\
+	".\directshow\include\dxtrans.h"\
+	".\directshow\include\qedit.h"\
+	".\FinalTest.h"\
+	".\FinalTestDlg.h"\
+	"c:\program files\opencv\cv\include\cv.h"\
+	"c:\program files\opencv\cv\include\cv.hpp"\
+	"c:\program files\opencv\cv\include\cvcompat.h"\
+	"c:\program files\opencv\cv\include\cvtypes.h"\
+	"c:\program files\opencv\cxcore\include\cvver.h"\
+	"c:\program files\opencv\cxcore\include\cxcore.h"\
+	"c:\program files\opencv\cxcore\include\cxcore.hpp"\
+	"c:\program files\opencv\cxcore\include\cxerror.h"\
+	"c:\program files\opencv\cxcore\include\cxtypes.h"\
+	"c:\program files\opencv\otherlibs\highgui\highgui.h"\
+	
+
+.\StdAfx.cpp : \
+	".\directshow\include\basetsd.h"\
+	".\StdAfx.h"\
+	

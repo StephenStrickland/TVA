@@ -1,0 +1,63 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: FinalTest - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/FinalTest.res" /d "NDEBUG" /d "_AFXDLL" "F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\FinalTest.rc"" 
+Creating temporary file "C:\Users\lzp\AppData\Local\Temp\RSP64DD.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "DirectShow/Include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Release/" /Fp"Release/FinalTest.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\CameraDS.cpp"
+"F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\FinalTest.cpp"
+"F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\FinalTestDlg.cpp"
+"F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\MyProc.cpp"
+]
+Creating command line "cl.exe @C:\Users\lzp\AppData\Local\Temp\RSP64DD.tmp" 
+Creating temporary file "C:\Users\lzp\AppData\Local\Temp\RSP64ED.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "DirectShow/Include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Release/" /Fp"Release/FinalTest.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\lzp\AppData\Local\Temp\RSP64ED.tmp" 
+Creating temporary file "C:\Users\lzp\AppData\Local\Temp\RSP64EE.tmp" with contents
+[
+Kernel32.lib Winmm.lib cxcore.lib cv.lib ml.lib cvaux.lib highgui.lib cvcam.lib /nologo /stack:0x2faf080 /subsystem:windows /incremental:no /pdb:"Release/FinalTest.pdb" /machine:I386 /out:"Release/FinalTest.exe" /libpath:"DirectShow/Lib" 
+".\Release\CameraDS.obj"
+".\Release\FinalTest.obj"
+".\Release\FinalTestDlg.obj"
+".\Release\MyProc.obj"
+".\Release\StdAfx.obj"
+".\Release\FinalTest.res"
+]
+Creating command line "link.exe @C:\Users\lzp\AppData\Local\Temp\RSP64EE.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+CameraDS.cpp
+FinalTest.cpp
+FinalTestDlg.cpp
+F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\FinalTestDlg.cpp(367) : warning C4101: 'j' : unreferenced local variable
+F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\FinalTestDlg.cpp(651) : warning C4101: 'k' : unreferenced local variable
+MyProc.cpp
+F:\Microsoft Visual Studio\MyProjects\版本管理\FinalTest\4.7.0\FinalTest\MyProc.cpp(1049) : warning C4101: 'j' : unreferenced local variable
+Generating Code...
+Linking...
+LINK : warning LNK4089: all references to "OLEAUT32.dll" discarded by /OPT:REF
+LINK : warning LNK4089: all references to "OLEPRO32.DLL" discarded by /OPT:REF
+LINK : warning LNK4089: all references to "ole32.dll" discarded by /OPT:REF
+Creating command line "bscmake.exe /nologo /o"Release/FinalTest.bsc"  ".\Release\StdAfx.sbr" ".\Release\CameraDS.sbr" ".\Release\FinalTest.sbr" ".\Release\FinalTestDlg.sbr" ".\Release\MyProc.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+FinalTest.exe - 0 error(s), 6 warning(s)
+</pre>
+</body>
+</html>
