@@ -51,5 +51,27 @@ namespace WindowsFormsApplicationTVA
         {
 
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            Form f = new Form();
+            f.ShowDialog(this);
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Title = "Load Video";
+            openFileDialog1.ShowDialog(this);
+        }
     }
 }
