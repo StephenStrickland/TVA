@@ -15,16 +15,17 @@ namespace WindowsFormsApplicationTVA
         public int diff { get; set; }
         public int average { get; set; }
         public bool tracked { get; set; }
+        public bool accelerated { get; set; }
 
-        public void calcDiff()
-        {
-            diff = end - start;
-        }
+        //public void calcDiff()
+        //{
+        //    diff = end - start;
+        //}
 
-        public void calcAverage()
-        {
-            average = ((end - start)/2);
-        }
+        //public void calcAverage()
+        //{
+        //    average = ((end - start)/2);
+        //}
 
     }
 }
