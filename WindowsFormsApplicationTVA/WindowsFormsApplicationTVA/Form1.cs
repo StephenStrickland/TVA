@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.Util;
+using Emgu.CV.CvEnum;
 
 
 namespace WindowsFormsApplicationTVA
@@ -74,7 +75,38 @@ namespace WindowsFormsApplicationTVA
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             openFileDialog1.Title = "Load Video";
-            openFileDialog1.ShowDialog(this);
+            if (openFileDialog1.ShowDialog()==DialogResult.OK)
+            {
+                string fileName = openFileDialog1.FileName;
+                PlayVideoFile(fileName);
+            }
+        }
+        
+
+        private void PlayVideoFile(string fileName)
+        {
+            string winName = "PlayVideoWin";
+            CvInvoke.cvNamedWindow(winName);
+            IntPtr capture = CvInvoke.cvCreateFileCapture(fileName);
+            IntPtr iplImage;
+            int fps = 0;//frames per second
+            while (true)
+            {
+                iplImage = CvInvoke.cvQueryFrame(capture);
+                //exit the loop after the end of play
+                if (iplImage.Equals(IntPtr.Zero)) break;
+                CvInvoke.cvShowImage(winName, iplImage);
+                if (fps == 0)
+                {
+                    fps = (int)CvInvoke.cvGetCaptureProperty(capture, CAP_PROP.CV_CAP_PROP_FPS);
+                }
+                int c = CvInvoke.cvWaitKey(fps);
+                // press "Esc" to exit the program
+                if (c == 27) break;
+            }
+            //release the resource
+            CvInvoke.cvReleaseCapture(ref capture);
+            CvInvoke.cvDestroyWindow(winName);
         }
     }
 }
