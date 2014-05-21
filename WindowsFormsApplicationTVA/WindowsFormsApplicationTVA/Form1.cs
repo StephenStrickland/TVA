@@ -12,6 +12,7 @@ using Emgu.Util;
 using Emgu.CV.CvEnum;
 using Emgu.CV.UI;
 using Emgu.CV.Structure;
+using Emgu.CV.VideoSurveillance;
 
 
 namespace WindowsFormsApplicationTVA
@@ -129,13 +130,16 @@ namespace WindowsFormsApplicationTVA
         private void PlayVideoFile(string fileName)
         {
             string test = "hello world";
-            Capture cap = new Capture(fileName);
+             Capture cap = null;
+             bool captureInProgress = false;
+                
+                //new Capture(fileName);
 
-            Image<Bgr, byte> img = cap.QueryFrame();
+            //Image<Bgr, byte> img = cap.QueryFrame();
 
-            ImageViewer vi = new ImageViewer();
-            vi.Image = img;
-            vi.ShowDialog();
+            //ImageViewer vi = new ImageViewer();
+            //vi.Image = img;
+            //vi.ShowDialog();
             
             //string winName = "PlayVideoWin";
             //CvInvoke.cvNamedWindow(winName);
