@@ -26,35 +26,6 @@ namespace WindowsFormsApplicationTVA
         Rectangle mRect;
 
 
-        //Initiate rectangle with mouse down event
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            mRect = new Rectangle(e.X, e.Y, 0, 0);
-            this.Invalidate();
-        }
-
-        //check if mouse is down and being draged, then draw rectangle
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                mRect = new Rectangle(mRect.Left, mRect.Top, e.X - mRect.Left, e.Y - mRect.Top);
-                this.Invalidate();
-            }
-        }
-
-        //draw the rectangle on paint event
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            //Draw a rectangle with 2pixel wide line
-            using (Pen pen = new Pen(Color.Red, 2))
-            {
-                e.Graphics.DrawRectangle(pen, mRect);
-            }
-
-
-
-        }
         //bool draw = false;
         //int s = 3;
         //Color color = Color.Red;
@@ -158,8 +129,7 @@ namespace WindowsFormsApplicationTVA
         private void PlayVideoFile(string fileName)
         {
             string test = "hello world";
-            Capture cap = new Capture();
-            cap = new Capture(fileName);
+            Capture cap = new Capture(fileName);
 
             Image<Bgr, byte> img = cap.QueryFrame();
 
@@ -228,6 +198,72 @@ namespace WindowsFormsApplicationTVA
             prompt.Controls.Add(inputBox);
             prompt.ShowDialog();
             return inputBox.Text;
+        }
+
+        //Initiate rectangle with mouse down event
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            mRect = new Rectangle(e.X, e.Y, 0, 0);
+            this.Invalidate();
+        }
+
+        //check if mouse is down and being draged, then draw rectangle
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+               
+                mRect = new Rectangle(mRect.Left, mRect.Top, Math.Min(e.X - mRect.Left, pictureBox1.ClientRectangle.Width - mRect.Left), Math.Min(e.Y - mRect.Top, pictureBox1.ClientRectangle.Height - mRect.Top));
+               // mRect = new Rectangle(mRect.Left, mRect.Top, e.X - mRect.Left, e.Y - mRect.Top);
+            }
+                this.Invalidate();
+        }
+
+        //draw the rectangle on paint event
+        protected override void OnPaint(PaintEventArgs e)
+        {
+           
+            //Draw a rectangle with 2pixel wide line
+            using (Pen pen = new Pen(Color.Red, 2))
+            {
+                e.Graphics.DrawRectangle(pen, mRect);
+            }
+
+
+
+        }
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mRect = new Rectangle(e.X, e.Y, 0, 0);
+            this.Invalidate();
+
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+
+                mRect = new Rectangle(mRect.Left, mRect.Top, e.X - mRect.Left, e.Y - mRect.Top);
+                // mRect = new Rectangle(mRect.Left, mRect.Top, e.X - mRect.Left, e.Y - mRect.Top);
+                MIplImage test = new MIplImage();
+                
+            }
+            this.Invalidate();
+
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            using (Pen pen = new Pen(Color.Red, 2))            {
+                e.Graphics.DrawRectangle(pen, mRect);
+            }
+
+        }
+
+        private void panAndZoomPictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
         
     }
