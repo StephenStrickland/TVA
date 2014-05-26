@@ -130,16 +130,64 @@ namespace WindowsFormsApplicationTVA
         private void PlayVideoFile(string fileName)
         {
             string test = "hello world";
-             Capture cap = null;
-             bool captureInProgress = false;
-                
-                //new Capture(fileName);
+            Capture cap = null;
+            bool captureInProgress = false;
+            int CameratDevice = 0;
+            int framWidth;
+            int frameHeight;
+            int frameCount;
+            Capture _Capture;
+            VideoWriter VW;
+            
+            //try
+            //{
+            //    //Show image
+            //    DisplayImage(_Capture.RetrieveBgrFrame().ToBitmap());
 
-            //Image<Bgr, byte> img = cap.QueryFrame();
+            //    //Show time stamp
+            //    double time_index = _Capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_MSEC);
+            //    UpdateTextBox("Time: " + TimeSpan.FromMilliseconds(time_index).ToString(), Time_Label);
 
-            //ImageViewer vi = new ImageViewer();
-            //vi.Image = img;
-            //vi.ShowDialog();
+            //    //show frame number
+            //    double framenumber = _Capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES);
+            //    UpdateTextBox("Frame: " + framenumber.ToString(), Frame_lbl);
+
+            //    //update trackbar
+            //    UpdateVideo_CNTRL(framenumber);
+
+            //    /*Note: We can increase or decrease this delay to fastforward of slow down the display rate
+            //     if we want a re-wind function we would have to use _Capture.SetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES, FrameNumber*);
+            //    //and call the process frame to update the picturebox ProcessFrame(null, null);. This is more complicated.*/
+
+            //    //Wait to display correct framerate
+            //    Thread.Sleep((int)(1000.0 / FrameRate)); //This may result in fast playback if the codec does not tell the truth
+
+            //    //Lets check to see if we have reached the end of the video
+            //    //If we have lets stop the capture and video as in pause button was pressed
+            //    //and reset the video back to start
+            //    if (framenumber == TotalFrames)
+            //    {
+            //        //pause button update
+            //        play_pause_BTN_MouseUp(null, null);
+
+            //        framenumber = 0;
+            //        UpdateVideo_CNTRL(framenumber);
+            //        _Capture.SetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES, framenumber);
+            //        //call the process frame to update the picturebox
+            //        ProcessFrame(null, null);
+            //    }
+            //}
+            //catch
+            //{
+            //}
+
+           cap =  new Capture(fileName);
+
+            Image<Bgr, byte> img = cap.QueryFrame();
+
+            ImageViewer vi = new ImageViewer();
+            vi.Image = img;
+            vi.ShowDialog();
             
             //string winName = "PlayVideoWin";
             //CvInvoke.cvNamedWindow(winName);
