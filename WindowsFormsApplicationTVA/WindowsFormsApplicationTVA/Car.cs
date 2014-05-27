@@ -16,6 +16,9 @@ namespace WindowsFormsApplicationTVA
         public int average { get; set; }
         public bool tracked { get; set; }
         public bool accelerated { get; set; }
+        public string timestamp { get; set; }
+        public Guid parent { get; set; }
+
 
         //public void calcDiff()
         //{
