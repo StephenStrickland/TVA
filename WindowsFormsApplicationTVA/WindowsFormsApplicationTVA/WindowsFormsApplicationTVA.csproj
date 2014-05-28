@@ -137,9 +137,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QManager.cs" />
-    <Compile Include="test.cs" />
-    <Compile Include="Tracker.cs" />
-    <Compile Include="VideoLoader.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,11 +219,10 @@
     <Content Include="opencv_photo242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="opencv_stitching242.dll" />
-    <Content Include="opencv_video242.dll">
+    <Content Include="opencv_stitching242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ZedGraph.dll">
+    <Content Include="opencv_video242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
