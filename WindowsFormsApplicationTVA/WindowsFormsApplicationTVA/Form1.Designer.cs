@@ -118,7 +118,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.CadetBlue;
+            //this.pictureBox1.BackColor = System.Drawing.Color.CadetBlue;
             this.pictureBox1.Location = new System.Drawing.Point(16, 44);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(681, 512);
