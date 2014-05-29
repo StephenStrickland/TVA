@@ -231,12 +231,16 @@
     <Content Include="opencv_photo242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="opencv_stitching242.dll" />
+    <Content Include="opencv_stitching242.dll">
     <Content Include="opencv_video242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+<<<<<<< HEAD
     <Content Include="ZedGraph.dll">
 >>>>>>> 02ae1e139f84b103a13de0fa00911fa375f4791d
+=======
+    <Content Include="opencv_video242.dll">
+>>>>>>> 09ecbf38f5b503e2a5fc2ff78e7d470d320e7c86
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
