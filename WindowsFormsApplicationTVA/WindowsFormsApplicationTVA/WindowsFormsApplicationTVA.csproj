@@ -200,9 +200,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QManager.cs" />
-    <Compile Include="test.cs" />
-    <Compile Include="Tracker.cs" />
-    <Compile Include="VideoLoader.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,15 +227,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Content Include="dependencies\Emgu.CV.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dependencies\Emgu.CV.UI.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dependencies\Emgu.Util.dll">
-=======
     <Content Include="BgsLibraryDll.dll" />
     <Content Include="cublas32_42_9.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -295,15 +283,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="opencv_stitching242.dll">
-    <Content Include="opencv_video242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-<<<<<<< HEAD
-    <Content Include="ZedGraph.dll">
->>>>>>> 02ae1e139f84b103a13de0fa00911fa375f4791d
-=======
     <Content Include="opencv_video242.dll">
->>>>>>> 09ecbf38f5b503e2a5fc2ff78e7d470d320e7c86
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
