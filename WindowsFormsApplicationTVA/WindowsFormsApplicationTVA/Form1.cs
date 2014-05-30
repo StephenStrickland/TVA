@@ -14,6 +14,8 @@ using Emgu.CV.UI;
 using Emgu.CV.Structure;
 using Emgu.CV.VideoSurveillance;
 using System.Diagnostics;
+using AForge.Video.DirectShow;
+using AForge.Video;
 
 
 namespace WindowsFormsApplicationTVA
@@ -162,8 +164,18 @@ namespace WindowsFormsApplicationTVA
 
                 //string fileName = openFileDialog1.FileName;
                string fileName = openFileDialog1.InitialDirectory + openFileDialog1.FileName;
-                PlayVideoFile(fileName);
+               FileVideoSource source = new FileVideoSource(fileName);
+               source.NewFrame += new NewFrameEventHandler(video_newFrame);
+               source.Start();
+               // PlayVideoFile(fileName);
             }
+        }
+
+        private void video_newFrame(object sender, NewFrameEventArgs evenArgs)
+        {
+            Bitmap bi = evenArgs.Frame;
+         //   pictureBox1.Image = bi;
+           // pictureBox1.Refresh();
         }
 
         private void streamToolStripMenuItem_Click(object sender, EventArgs e)
