@@ -16,6 +16,12 @@ using Emgu.CV.VideoSurveillance;
 using System.Diagnostics;
 using AForge.Video.DirectShow;
 using AForge.Video;
+using AForge.Imaging;
+using AForge.Imaging.Filters;
+using AForge.Vision.Motion;
+using AForge.Vision;
+using System.Drawing;
+
 
 
 namespace WindowsFormsApplicationTVA
@@ -27,8 +33,37 @@ namespace WindowsFormsApplicationTVA
            // mRect.Parent.Parent = pictureBox1;
             InitializeComponent();
             this.DoubleBuffered = true;
+            Through = new Car();
+            Turn = new Car();
+            blb.FilterBlobs = true;
+            blb.MinHeight = 5;
+            blb.MinWidth = 5;
+            blb.ObjectsOrder = ObjectsOrder.Size;
+            simpleBg = new SimpleBackgroundModelingDetector(true, true);
+            simpleBg.FramesPerBackgroundUpdate = 5;
+            simpleBg.DifferenceThreshold = 15;
+            
+            blob = new BlobCountingObjectsProcessing(8,8);
+            motArea = new MotionAreaHighlighting(Color.Red);
+
+            DET = new MotionDetector(simpleBg, blob);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+
+            //initListView();
+            
+            
             
         }
+
+        private void initListView()
+        {
+            listView1.Columns.Add("Object", 20, HorizontalAlignment.Left);
+        }
+        MotionAreaHighlighting motArea;
+        SimpleBackgroundModelingDetector simpleBg;
+        BlobCountingObjectsProcessing blob;
+        MotionDetector DET;
         Rectangle mRect;
         bool draw = false;
 
@@ -62,7 +97,22 @@ namespace WindowsFormsApplicationTVA
         //}
 
         //drawing cs = new drawing() { ev = 2, 34 };
+        Car Turn, Through;
+        AsyncVideoSource aSyncSource;
+        //Image CurrentFrame;
+        public event EventHandler Alarm;
+        IFilter thresholdFilter = new Threshold(15);
+        Difference differencefilter = new Difference();
+        //Image PreviousFrame;
+        //Image Bg;
+        private IVideoSource vidSrouce = null;
+        private IMotionDetector motionDet = null;
+        private Bitmap lastFrame = null;
+        private Bitmap currentFrame = null;
+        private Bitmap backgroundFrame = null;
+        public event EventHandler NewFrame;
 
+        BlobCounter blb = new BlobCounter();
 
      
 
@@ -119,40 +169,6 @@ namespace WindowsFormsApplicationTVA
             Stopwatch SW;
 
 
-            //DisplayImage(_Capture.RetrieveBgrFrame().ToBitmap());
- 
-            //        //Show time stamp
-            //        double time_index = _Capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_MSEC);
-            //        UpdateTextBox("Time: " + TimeSpan.FromMilliseconds(time_index).ToString(), Time_Label);
- 
-            //        //show frame number
-            //        double framenumber = _Capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES);
-            //        UpdateTextBox("Frame: " + framenumber.ToString(), Frame_lbl);
- 
-            //        //update trackbar
-            //        UpdateVideo_CNTRL(framenumber);
- 
-            //        /*Note: We can increase or decrease this delay to fastforward of slow down the display rate
-            //         if we want a re-wind function we would have to use _Capture.SetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES, FrameNumber*);
-            //        //and call the process frame to update the picturebox ProcessFrame(null, null);. This is more complicated.*/
- 
-            //        //Wait to display correct framerate
-            //        Thread.Sleep((int)(1000.0 / FrameRate)); //This may result in fast playback if the codec does not tell the truth
- 
-            //        //Lets check to see if we have reached the end of the video
-            //        //If we have lets stop the capture and video as in pause button was pressed
-            //        //and reset the video back to start
-            //        if (framenumber == TotalFrames)
-            //        {
-            //            //pause button update
-            //            play_pause_BTN_MouseUp(null, null);
-
-            //            framenumber = 0;
-            //            UpdateVideo_CNTRL(framenumber);
-            //            _Capture.SetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES, framenumber);
-            //            //call the process frame to update the picturebox
-            //            ProcessFrame(null, null);
-            //        }
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,16 +180,48 @@ namespace WindowsFormsApplicationTVA
 
                 //string fileName = openFileDialog1.FileName;
                string fileName = openFileDialog1.InitialDirectory + openFileDialog1.FileName;
-               FileVideoSource source = new FileVideoSource(fileName);
-               source.NewFrame += new NewFrameEventHandler(video_newFrame);
-               source.Start();
+              // FileVideoSource source = new FileVideoSource(fileName);
+              // source.NewFrame += new NewFrameEventHandler(video_newFrame);
+              // source.Start();
                // PlayVideoFile(fileName);
+
+               aSyncSource = new AsyncVideoSource(new FileVideoSource(fileName));
+               aSyncSource.NewFrame += new NewFrameEventHandler(video_newFrame);
+               aSyncSource.Start();
+               
+           
+               
+              // IVideoSource src = new FileVideoSource(fileName);
+               //Detector dt = new Detector(src);
             }
         }
-
+        Grayscale gf = new Grayscale(.2125, .7154, .0721);
         private void video_newFrame(object sender, NewFrameEventArgs evenArgs)
         {
-            Bitmap bi = evenArgs.Frame;
+            Bitmap bi = (Bitmap)evenArgs.Frame.Clone();
+            Bitmap ai = (Bitmap)bi.Clone();
+            gf.Apply(ai);
+            pictureBox2.Image = ai;
+
+           // currentFrame = bi;
+            if (DET.ProcessFrame(bi) > .02)
+            {
+                if(blob.ObjectsCount > 1)
+                {
+
+                }
+
+            }
+            pictureBox1.Image = bi;
+            var rect = blob.ObjectRectangles;
+            if (null != rect)
+            {
+                var it = new ListViewItem(new[] { "Turn", aSyncSource.FramesProcessed.ToString(), "true", "X,Y" });
+               
+                listView1.Items.Add(it);
+            }
+           
+           
          //   pictureBox1.Image = bi;
            // pictureBox1.Refresh();
         }
@@ -268,6 +316,21 @@ namespace WindowsFormsApplicationTVA
 
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
 
 
         
@@ -275,31 +338,7 @@ namespace WindowsFormsApplicationTVA
 
       
 
-      
-
-        //private void Form1_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (e.Button == MouseButtons.Left)
-        //    {
-        //        // draws the rectangle as the mouse moves
-        //        mRect = new Rectangle(mRect.Left, mRect.Top, e.X - mRect.Left, e.Y - mRect.Top);
-        //    }
-        //    this.Invalidate();
-        //}
-
-        //private void Form1_Paint(object sender, PaintEventArgs e)
-        //{
-        //    using (Pen pen = new Pen(Color.Red, 2))
-        //    {
-        //        e.Graphics.DrawRectangle(pen, mRect);
-        //    }
-        //}
-
-        //private void Form1_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    mRect = new Rectangle(e.X, e.Y, 0, 0);
-        //    this.Invalidate();
-        //}
+    
         
     }
 }

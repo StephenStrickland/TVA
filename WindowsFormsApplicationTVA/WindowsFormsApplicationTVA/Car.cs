@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,11 @@ namespace WindowsFormsApplicationTVA
         public bool accelerated { get; set; }
         public string timestamp { get; set; }
         public Guid parent { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Rectangle currentRect { get; set; }
+        public int elapsedFrames { get; set; }
+
 
 
         //public void calcDiff()

@@ -45,7 +45,11 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.videoSourcePlayer1 = new AForge.Controls.VideoSourcePlayer();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.Cars = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ElapsedFrames = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Valid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CenterPoint = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -126,6 +130,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(681, 512);
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
@@ -197,25 +202,56 @@
             this.pictureBox2.BackColor = System.Drawing.Color.Beige;
             this.pictureBox2.Location = new System.Drawing.Point(757, 44);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(249, 198);
+            this.pictureBox2.Size = new System.Drawing.Size(389, 207);
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
-            // videoSourcePlayer1
+            // listView1
             // 
-            this.videoSourcePlayer1.Location = new System.Drawing.Point(757, 330);
-            this.videoSourcePlayer1.Name = "videoSourcePlayer1";
-            this.videoSourcePlayer1.Size = new System.Drawing.Size(249, 197);
-            this.videoSourcePlayer1.TabIndex = 17;
-            this.videoSourcePlayer1.Text = "videoSourcePlayer1";
-            this.videoSourcePlayer1.VideoSource = null;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Cars,
+            this.ElapsedFrames,
+            this.Valid,
+            this.CenterPoint});
+            this.listView1.GridLines = true;
+            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(826, 343);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(320, 213);
+            this.listView1.TabIndex = 16;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // Cars
+            // 
+            this.Cars.Text = "Cars";
+            this.Cars.Width = 50;
+            // 
+            // ElapsedFrames
+            // 
+            this.ElapsedFrames.Text = "Elapsed";
+            this.ElapsedFrames.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Valid
+            // 
+            this.Valid.Text = "Is Valid";
+            this.Valid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // CenterPoint
+            // 
+            this.CenterPoint.Text = "Center Point";
+            this.CenterPoint.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.CenterPoint.Width = 80;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1158, 636);
-            this.Controls.Add(this.videoSourcePlayer1);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -256,7 +292,11 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem streamToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private AForge.Controls.VideoSourcePlayer videoSourcePlayer1;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader Cars;
+        private System.Windows.Forms.ColumnHeader ElapsedFrames;
+        private System.Windows.Forms.ColumnHeader Valid;
+        private System.Windows.Forms.ColumnHeader CenterPoint;
 
 
     }
