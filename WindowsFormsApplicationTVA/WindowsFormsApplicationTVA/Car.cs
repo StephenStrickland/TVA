@@ -23,6 +23,18 @@ namespace WindowsFormsApplicationTVA
         public int Y { get; set; }
         public Rectangle currentRect { get; set; }
         public int elapsedFrames { get; set; }
+        public bool done { get; set; }
+        public Point position { get; set; }
+
+        public int getTime(int fps)
+        {
+            int result = 0;
+
+            result = (elapsedFrames/fps);
+             
+            return result;
+            
+        }
 
 
 
