@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplicationTVA
 {
-    class Car
+    public class Car
     {
 
         //centiseconds
@@ -18,13 +18,16 @@ namespace WindowsFormsApplicationTVA
         public bool tracked { get; set; }
         public bool accelerated { get; set; }
         public string timestamp { get; set; }
-        public Guid parent { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+       // public Guid parent { get; set; }
         public Rectangle currentRect { get; set; }
         public int elapsedFrames { get; set; }
         public bool done { get; set; }
         public Point position { get; set; }
+        public bool isValidData { get; set;}
+        public bool isThrough { get; set; }
+
+        public bool set { get; set;}
+        public int id { get; set; }
 
         public int getTime(int fps)
         {
