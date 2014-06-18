@@ -63,7 +63,7 @@
             this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1158, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1140, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -73,7 +73,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(39, 22);
             this.toolStripButton1.Text = "Save";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -86,21 +86,21 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(50, 22);
             this.toolStripButton2.Text = "Load";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.fileToolStripMenuItem.Text = "File";
             this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // streamToolStripMenuItem
             // 
             this.streamToolStripMenuItem.Name = "streamToolStripMenuItem";
-            this.streamToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.streamToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.streamToolStripMenuItem.Text = "Stream";
             this.streamToolStripMenuItem.Click += new System.EventHandler(this.streamToolStripMenuItem_Click);
             // 
@@ -110,24 +110,24 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton3.Text = "Viewer";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 29);
+            this.label1.Location = new System.Drawing.Point(13, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.Size = new System.Drawing.Size(35, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "Video";
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.CadetBlue;
-            this.pictureBox1.Location = new System.Drawing.Point(16, 44);
+            this.pictureBox1.Location = new System.Drawing.Point(16, 41);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(681, 512);
+            this.pictureBox1.Size = new System.Drawing.Size(681, 473);
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -139,9 +139,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 559);
+            this.label2.Location = new System.Drawing.Point(13, 516);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
+            this.label2.Size = new System.Drawing.Size(71, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "Preferences";
             // 
@@ -151,16 +151,16 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Box",
             "Line"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 601);
+            this.comboBox1.Location = new System.Drawing.Point(12, 555);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(80, 21);
+            this.comboBox1.Size = new System.Drawing.Size(80, 20);
             this.comboBox1.TabIndex = 6;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(100, 600);
+            this.button1.Location = new System.Drawing.Point(100, 554);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 21);
             this.button1.TabIndex = 7;
             this.button1.Text = "Draw";
             this.button1.UseVisualStyleBackColor = true;
@@ -168,17 +168,17 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 585);
+            this.label4.Location = new System.Drawing.Point(9, 540);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(71, 12);
             this.label4.TabIndex = 8;
             this.label4.Text = "Test Method";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(622, 601);
+            this.button2.Location = new System.Drawing.Point(622, 555);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(75, 21);
             this.button2.TabIndex = 9;
             this.button2.Text = "Analyze";
             this.button2.UseVisualStyleBackColor = true;
@@ -190,9 +190,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(195, 600);
+            this.button3.Location = new System.Drawing.Point(195, 554);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 23);
+            this.button3.Size = new System.Drawing.Size(120, 21);
             this.button3.TabIndex = 13;
             this.button3.Text = "Place Lane Watchers";
             this.button3.UseVisualStyleBackColor = true;
@@ -200,9 +200,9 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Beige;
-            this.pictureBox2.Location = new System.Drawing.Point(757, 44);
+            this.pictureBox2.Location = new System.Drawing.Point(757, 41);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(389, 207);
+            this.pictureBox2.Size = new System.Drawing.Size(389, 191);
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
@@ -217,9 +217,9 @@
             this.listView1.GridLines = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(826, 343);
+            this.listView1.Location = new System.Drawing.Point(826, 317);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(320, 213);
+            this.listView1.Size = new System.Drawing.Size(320, 197);
             this.listView1.TabIndex = 16;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -248,9 +248,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1158, 636);
+            this.ClientSize = new System.Drawing.Size(1140, 587);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button3);

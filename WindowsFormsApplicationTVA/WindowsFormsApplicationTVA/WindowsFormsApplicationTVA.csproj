@@ -182,7 +182,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Car.cs" />
-    <Compile Include="Detector.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="ENUM_TYPE.cs" />
     <Compile Include="Form1.cs">
@@ -244,51 +243,21 @@
     <Content Include="npp32_42_9.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="opencv_calib3d242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_contrib242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_core242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_features2d242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_ffmpeg242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_flann242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_gpu242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_highgui242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_imgproc242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_legacy242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_ml242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_objdetect242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_photo242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_stitching242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_video242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="opencv_calib3d242.dll" />
+    <Content Include="opencv_contrib242.dll" />
+    <Content Include="opencv_core242.dll" />
+    <Content Include="opencv_features2d242.dll" />
+    <Content Include="opencv_ffmpeg242_64.dll" />
+    <Content Include="opencv_flann242.dll" />
+    <Content Include="opencv_gpu242.dll" />
+    <Content Include="opencv_highgui242.dll" />
+    <Content Include="opencv_imgproc242.dll" />
+    <Content Include="opencv_legacy242.dll" />
+    <Content Include="opencv_ml242.dll" />
+    <Content Include="opencv_objdetect242.dll" />
+    <Content Include="opencv_photo242.dll" />
+    <Content Include="opencv_stitching242.dll" />
+    <Content Include="opencv_video242.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dependencies\" />
