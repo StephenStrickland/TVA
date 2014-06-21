@@ -16,7 +16,16 @@ namespace WindowsFormsApplicationTVA
             
            // setSides(TOP, BOTTOM);
         }
+        /*
+         *Points go Clock Wise starting in the lower left corner
+         * 
+         * bottom, left, top, right
+         * 
+         * 
+         */
 
+
+        //takes the Corner Points and sets them to the appropriate Point
         public void setPoints(PictureBox b)
         {
             if (Corners.Count > 3)
@@ -53,6 +62,7 @@ namespace WindowsFormsApplicationTVA
             return path.IsVisible(p);
         }
 
+        //this is not limited to just the current polygon, give it any array of points and it will test if it is inside.
         public bool partialPolygonContainsPoint(Point[] pts, Point target)
         {
             GraphicsPath path = new GraphicsPath();
@@ -60,6 +70,7 @@ namespace WindowsFormsApplicationTVA
            return  path.IsVisible(target);
         }
 
+        //takes four corners of rect and tests to see if atleast on point is in rect
         public bool partialPolygonContainsRect(Point[] pts, Rectangle target)
         {
              bool result = false;
@@ -75,7 +86,7 @@ namespace WindowsFormsApplicationTVA
             return result;
         }
 
-
+        //returns the midpoint of two points
         public Point midPoint(Point lower, Point upper)
         {
             double y = Math.Abs(upper.Y - lower.Y)/2;
@@ -84,7 +95,7 @@ namespace WindowsFormsApplicationTVA
              return p;
         }
 
-
+        //takes four corners of rect and tests to see if atleast on point is in rect
         public bool ContainsRect(Rectangle r)
         {
             bool result = false;
@@ -112,7 +123,7 @@ namespace WindowsFormsApplicationTVA
         public List<Point> Corners { get; set; }
         public List<Point> TopSide { get; set; }
         public List<Point> BottomSide { get; set; }
-
+        //not used
         enum Sides
         {
             Top, Left, Right, Bottom

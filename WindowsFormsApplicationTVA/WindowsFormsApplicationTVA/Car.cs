@@ -29,6 +29,9 @@ namespace WindowsFormsApplicationTVA
         public bool set { get; set;}
         public int id { get; set; }
 
+        public virtual List<Rectangle> History { get; set; }
+
+        //returns the time
         public int getTime(int fps)
         {
             int result = 0;
@@ -38,7 +41,7 @@ namespace WindowsFormsApplicationTVA
             return result;
             
         }
-
+        //if you are giving a car its new postion/rect call this
         public Rectangle currentRect
         {
             
@@ -53,6 +56,7 @@ namespace WindowsFormsApplicationTVA
             History = new List<Rectangle>();
         }
 
+        //compares the first and the last position of the car, if it is negative then it moved down, else moved up(turn)
         public void setType()
         {
             if(History.LastOrDefault().Location.Y - History[0].Location.Y < 0)
@@ -74,7 +78,7 @@ namespace WindowsFormsApplicationTVA
             return sb.ToString();
         }
 
-        public virtual List<Rectangle> History { get; set;}
+      
 
         //public void calcDiff()
         //{
