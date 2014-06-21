@@ -30,9 +30,6 @@
         {
             System.Windows.Forms.ColumnHeader ElapsedFrames;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Test",
-            "another test"}, -1);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -134,7 +131,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.CadetBlue;
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.pictureBox1.Location = new System.Drawing.Point(12, 45);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(778, 542);
@@ -157,11 +154,9 @@
             this.listView1.GridLines = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.listView1.Location = new System.Drawing.Point(796, 45);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(405, 571);
+            this.listView1.Size = new System.Drawing.Size(405, 542);
             this.listView1.TabIndex = 16;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -192,7 +187,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 653);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 642);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1213, 22);
             this.statusStrip1.TabIndex = 17;
@@ -211,9 +206,9 @@
             this.pbRectangle.Size = new System.Drawing.Size(558, 331);
             this.pbRectangle.TabIndex = 18;
             this.pbRectangle.TabStop = false;
-            this.pbRectangle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pbRectangle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.pbRectangle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            this.pbRectangle.Paint += new System.Windows.Forms.PaintEventHandler(this.pbRectangle_Paint);
+            this.pbRectangle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbRectangle_MouseDown);
+            this.pbRectangle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbRectangle_MouseMove_NotDrawing);
             // 
             // comboBox2
             // 
@@ -221,7 +216,7 @@
             this.comboBox2.Items.AddRange(new object[] {
             "Box",
             "Line"});
-            this.comboBox2.Location = new System.Drawing.Point(12, 629);
+            this.comboBox2.Location = new System.Drawing.Point(12, 612);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(80, 21);
             this.comboBox2.TabIndex = 6;
@@ -229,7 +224,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 613);
+            this.label2.Location = new System.Drawing.Point(9, 596);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 8;
@@ -237,19 +232,21 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(108, 627);
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.Location = new System.Drawing.Point(108, 610);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
             this.button1.Text = "Analyze";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1213, 675);
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ClientSize = new System.Drawing.Size(1213, 664);
             this.Controls.Add(this.pbRectangle);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.listView1);

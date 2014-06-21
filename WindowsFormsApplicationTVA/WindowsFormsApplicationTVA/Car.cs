@@ -19,7 +19,7 @@ namespace WindowsFormsApplicationTVA
         public bool accelerated { get; set; }
         public string timestamp { get; set; }
        // public Guid parent { get; set; }
-        public Rectangle currentRect { get; set; }
+      //  public Rectangle currentRect { get; set; }
         public int elapsedFrames { get; set; }
         public bool done { get; set; }
         public Point position { get; set; }
@@ -39,7 +39,42 @@ namespace WindowsFormsApplicationTVA
             
         }
 
+        public Rectangle currentRect
+        {
+            
+            set 
+        {
+            History.Insert(0, value);
+        }
+        }
 
+        public Car()
+        {
+            History = new List<Rectangle>();
+        }
+
+        public void setType()
+        {
+            if(History.LastOrDefault().Location.Y - History[0].Location.Y < 0)
+            {
+                isThrough = true;
+            }
+        }
+
+        public String toString() 
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(this.id);
+            sb.Append("| Frames:  " + this.elapsedFrames);
+            sb.Append(" | Time: " + this.isValidData);
+            if (History != null && History.Count > 0)
+                sb.Append("   Location: " + History[0].ToString());
+
+
+            return sb.ToString();
+        }
+
+        public virtual List<Rectangle> History { get; set;}
 
         //public void calcDiff()
         //{
