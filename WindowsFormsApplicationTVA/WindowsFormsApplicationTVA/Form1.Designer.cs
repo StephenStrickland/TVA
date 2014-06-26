@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ColumnHeader ElapsedFrames;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -39,29 +38,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.Cars = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Valid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.CenterPoint = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Completed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbRectangle = new System.Windows.Forms.PictureBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            ElapsedFrames = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRectangle)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ElapsedFrames
-            // 
-            ElapsedFrames.Text = "Frames";
-            ElapsedFrames.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            ElapsedFrames.Width = 99;
             // 
             // toolStrip1
             // 
@@ -71,7 +56,7 @@
             this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1213, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(805, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -131,7 +116,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(22, 160, 133);
             this.pictureBox1.Location = new System.Drawing.Point(12, 45);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(778, 542);
@@ -143,53 +128,13 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Cars,
-            ElapsedFrames,
-            this.Valid,
-            this.CenterPoint,
-            this.Completed});
-            this.listView1.GridLines = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(796, 45);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(405, 542);
-            this.listView1.TabIndex = 16;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // Cars
-            // 
-            this.Cars.Text = "ID";
-            this.Cars.Width = 53;
-            // 
-            // Valid
-            // 
-            this.Valid.Text = "Time";
-            this.Valid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // CenterPoint
-            // 
-            this.CenterPoint.Text = "Is Valid";
-            this.CenterPoint.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.CenterPoint.Width = 80;
-            // 
-            // Completed
-            // 
-            this.Completed.Text = "Completed";
-            this.Completed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Completed.Width = 99;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 642);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1213, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(805, 22);
             this.statusStrip1.TabIndex = 17;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -201,6 +146,7 @@
             // pbRectangle
             // 
             this.pbRectangle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbRectangle.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pbRectangle.ErrorImage")));
             this.pbRectangle.Location = new System.Drawing.Point(136, 112);
             this.pbRectangle.Name = "pbRectangle";
             this.pbRectangle.Size = new System.Drawing.Size(558, 331);
@@ -210,30 +156,10 @@
             this.pbRectangle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbRectangle_MouseDown);
             this.pbRectangle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbRectangle_MouseMove_NotDrawing);
             // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "Box",
-            "Line"});
-            this.comboBox2.Location = new System.Drawing.Point(12, 612);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(80, 21);
-            this.comboBox2.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 596);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Test Method";
-            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.Control;
-            this.button1.Location = new System.Drawing.Point(108, 610);
+            this.button1.Location = new System.Drawing.Point(12, 606);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 9;
@@ -246,16 +172,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1213, 664);
+            this.ClientSize = new System.Drawing.Size(805, 664);
             this.Controls.Add(this.pbRectangle);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Traffic Video Analysis";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -282,16 +206,9 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripButton2;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem streamToolStripMenuItem;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader Cars;
-        private System.Windows.Forms.ColumnHeader Valid;
-        private System.Windows.Forms.ColumnHeader CenterPoint;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.PictureBox pbRectangle;
-        private System.Windows.Forms.ColumnHeader Completed;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
 
 

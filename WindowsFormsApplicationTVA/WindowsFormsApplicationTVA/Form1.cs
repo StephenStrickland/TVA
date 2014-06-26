@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.Util;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 using System.Diagnostics;
 using AForge.Video.DirectShow;
 using AForge.Video;
@@ -22,6 +24,7 @@ using AForge.Video.FFMPEG;
 using System.Threading;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using System.IO;
 
 
 
@@ -55,9 +58,9 @@ namespace WindowsFormsApplicationTVA
             //setup our motion detector and processor
             simpleBg = new SimpleBackgroundModelingDetector();
             simpleBg.SuppressNoise = true;
-            simpleBg.MillisecondsPerBackgroundUpdate = 0;
-            simpleBg.FramesPerBackgroundUpdate = 10;
-            simpleBg.DifferenceThreshold = 10;
+            simpleBg.MillisecondsPerBackgroundUpdate = 30;
+            //simpleBg.FramesPerBackgroundUpdate = ;
+            simpleBg.DifferenceThreshold = 30;
             simpleBg.KeepObjectsEdges = true;
             blob = new BlobCountingObjectsProcessing(15, 15);
             blob.HighlightMotionRegions = true;
@@ -87,10 +90,16 @@ namespace WindowsFormsApplicationTVA
 
             //this section is for debugging. it draws a standard polygon.
             var lst = new  List<Point>();
-            lst.Add(new Point(179, 207));
-            lst.Add(new Point(235,232));
+            lst.Add(new Point(84, 213));
+            lst.Add(new Point(244,193));
             lst.Add(new Point(304, 216));
-            lst.Add(new Point(244, 193));
+            lst.Add(new Point(156, 288));
+
+            //var lst = new List<Point>();
+            //lst.Add(new Point(179, 207));
+            //lst.Add(new Point(235, 232));
+            //lst.Add(new Point(304, 216));
+            //lst.Add(new Point(244, 193));
 
             Polygons.Add(lst);
             //give our poly the vertices, then set them.
@@ -109,7 +118,7 @@ namespace WindowsFormsApplicationTVA
 
         private void initListView()
         {
-            listView1.Columns.Add("Object", 20, HorizontalAlignment.Left);
+            //listView1.Columns.Add("Object", 20, HorizontalAlignment.Left);
         }
         //motion handlers(detectors, processors)
         MotionAreaHighlighting motArea;
@@ -149,6 +158,15 @@ namespace WindowsFormsApplicationTVA
             //sv.FileOk += save_CSV();
             if (sv.ShowDialog() == DialogResult.OK)
             {
+                foreach (var c in CarMaster)
+                {
+                   // CSV = new StringBuilder();
+                    addCSV(c);
+                }
+                //save csv to directory output
+                string saveString = CSV.ToString();
+                string path = sv.FileName;
+                File.WriteAllText(path , saveString);
                 ///save and genereate the csv file to that location
             }
         }
@@ -161,12 +179,14 @@ namespace WindowsFormsApplicationTVA
             
             //set first frame
             Capture cp = new Capture(fileName);
-            cp.Wait();
+           // cp.Wait();
 
             Image<Bgr, Byte> img = cp.QueryFrame();
             Bitmap temp = new Bitmap((Bitmap)img.Bitmap.Clone());
             FRAMERATE = cp.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FPS);
             TOTALFRAMES = cp.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_COUNT);
+            double imgH = cp.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT);
+            double imgW = cp.GetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_WIDTH);
             pictureBox1.Image = temp;
             cp.Dispose();
             img.Dispose();
@@ -217,6 +237,10 @@ namespace WindowsFormsApplicationTVA
         double scaleX = 0;
         double scaleY = 0;
 
+        double offsetx = 0;
+        double offsety = 0;
+
+
         //analyze button
         private void button2_Click(object sender, EventArgs e)
         {
@@ -228,6 +252,30 @@ namespace WindowsFormsApplicationTVA
                     //find the scale
                     scaleX = pictureBox1.Image.Size.Width / (1.0 * pictureBox1.Width);
                     scaleY = pictureBox1.Image.Size.Height / (1.0 * pictureBox1.Height);
+
+
+
+                    if (scaleX < scaleY)
+                    {
+                      
+                        double tempOffset = (pictureBox1.Width - (pictureBox1.Image.Width / scaleY)) /2 ;
+                        offsetx = tempOffset;
+
+                        scaleX = scaleY;
+                    }
+                    else
+                    {
+                          double tempOffset = (pictureBox1.Height - (pictureBox1.Image.Height / scaleX)) /2 ;
+
+                        offsety = tempOffset;
+                        scaleY = scaleX;
+
+                    }
+
+
+
+
+
 
                     isRunning = true;
                    //start video
@@ -265,7 +313,7 @@ namespace WindowsFormsApplicationTVA
                 // currentFrame = bi;
                 if ((motion = DET.ProcessFrame(bi)) < 1)
                 {
-                    if (blob.ObjectsCount > 0)
+                    if (blob.ObjectsCount > 0 && frames_Count > 100)
                     {
                         Tracker(blob.ObjectRectangles);
                     }
@@ -316,6 +364,7 @@ namespace WindowsFormsApplicationTVA
         public void Tracker(Rectangle[] rects)
         {
             Console.WriteLine("******* NUmber of Rects: " + rects.Length.ToString());
+            Console.WriteLine("Total Cars: " + CarMaster.Count());
             List<Rectangle> MasterList = rects.ToList();
             MasterList = ValidateRects(MasterList);
             if (MasterList.Count > 0)
@@ -325,14 +374,17 @@ namespace WindowsFormsApplicationTVA
 
                 if (CarMaster.Count > 0)
                     CarListTemp = CarMaster.Where ( x=> !x.done).ToList();
-                
+
+                bool carWasUpdated = false;
 
                 foreach (var r in MasterList)
                 {
+                    carWasUpdated = false;
                    foreach ( var c in CarListTemp )
                    {
                        if (c.History[0].IntersectsWith(r))
                        {
+                           carWasUpdated = true;
                            c.History.Insert(0, r);
                            c.elapsedFrames++;
                            //goto next rect
@@ -340,8 +392,15 @@ namespace WindowsFormsApplicationTVA
 
                        }
                    }
-                    if(isValidCar(r))
-                   NewCars.Add(new Car { currentRect = r, start = frames_Count, done = false, elapsedFrames = 1, id = CarMaster.Count });
+                   if (!carWasUpdated)
+                   {
+                       if (isValidCar(r))
+                       {
+                           NewCars.Add(new Car { currentRect = r, start = frames_Count, done = false, elapsedFrames = 1, id = CarMaster.Count, timestamp = startTime(frames_Count).ToString() });
+                           Console.WriteLine("New Car: " + r.ToString());
+                       }
+                   }
+
 
 
                 }
@@ -352,22 +411,74 @@ namespace WindowsFormsApplicationTVA
                 CarMaster.AddRange(NewCars);
 
                 //This is very messy, FFD find a new way to do this, this was just a quick and dirty way of adding cars to the top of the listview.
-                foreach ( var cc in NewCars)
-                AddListView(cc);
+                foreach (var cc in NewCars)
+                {
+
+                    //AddListView(cc);
+                   // addCSV(cc);
+
+                }
                 checkFinished();
                 // update listview
                 //add listview NewCars
+                //foreach(var c in CarMaster)
+                //{
+                //    CSV = new StringBuilder();
+                //    addCSV(c);
+                //}
+
+               // C:\Users\sstrickland\Desktop
 
             }
+                if (frames_Count % 1000 == 0 || frames_Count == TOTALFRAMES)
+                {
+                    CSV = new StringBuilder();
+                    CSV.Append("ID,");
+                    CSV.Append("ElapsedFrames,");
+                    CSV.Append("ElapsedTimeInROI,");
+                    CSV.Append("Direction,");
+                    CSV.Append("TimeEnteredROI" + Environment.NewLine);
+                    foreach (var c in CarMaster)
+                    {
+                        // CSV = new StringBuilder();
+                        addCSV(c);
+                    }
+
+                    string folder = string.Format(@"C:\Users\sstrickland\Desktop\TVAData",  Environment.GetEnvironmentVariable("USERNAME"));
+                    if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                    string path = string.Format(@"C:\Users\sstrickland\Desktop\TVAData\log_{0}.csv", DateTime.Now.Ticks).Replace("sstrickland", Environment.GetEnvironmentVariable("USERNAME"));
+
+                    
+
+                    //save csv to directory output
+                    string saveString = CSV.ToString();
+                    
+                    File.WriteAllText(path, saveString);
+                }
             Console.WriteLine(Environment.NewLine + "\r\n End of Tracker" );
            
+        }
+        public double startTime(int frames)
+        {
+            return (frames / FRAMERATE);
         }
         //adds a car to CSV
         public void addCSV(Car c)
         {
+            string direction = "";
+            if(c.isThrough)
+            {
+                direction = "THROUGH";
+            }
+            else
+            {
+                direction = "TURN";
+            }
             CSV.Append(c.id +  ",");
             CSV.Append(c.elapsedFrames + ",");
-            CSV.Append(c.getTime(30) + Environment.NewLine);
+            CSV.Append(c.getTime(30).ToString() + ",");
+            CSV.Append(direction + ",");
+            CSV.Append(c.timestamp + Environment.NewLine);
             
 
         }
@@ -395,14 +506,29 @@ namespace WindowsFormsApplicationTVA
             Point left = r.Location;
             Point target = getCenter(r);
             bool result = false;
-            if(target.X <= poly.Bottom.X || target.X <= poly.Left.X)
-                result = (isPointLeftOfRay(target, poly.Left, poly.Bottom) && !isPointLeftOfRay(target, poly.Top, poly.Right));
-            else if (target.X >= poly.Right.X || target.X >= poly.Top.X)
-            {
-                result = (!isPointLeftOfRay(target, poly.Left, poly.Bottom) && isPointLeftOfRay(target, poly.Top, poly.Right));
-            }
 
-            return result;
+            Point topCenterRay = poly.midPoint(poly.Left, poly.Top);
+            Point bottomCenterRay = poly.midPoint(poly.Bottom, poly.Right);
+
+
+            if (!isPointLeftOfRay(target, poly.Bottom, poly.Right))
+                return false;
+
+            if (isPointLeftOfRay(target, poly.Left, poly.Top))
+                return false;
+
+            return true;
+
+
+
+            //if(target.X <= poly.Bottom.X || target.X <= poly.Left.X)
+            //    result = (isPointLeftOfRay(target, poly.Left, poly.Bottom) && !isPointLeftOfRay(target, poly.Top, poly.Right));
+            //else if (target.X >= poly.Right.X || target.X >= poly.Top.X)
+            //{
+            //    result = (!isPointLeftOfRay(target, poly.Left, poly.Bottom) && isPointLeftOfRay(target, poly.Top, poly.Right));
+            //}
+
+            //return result;
         }
 
           //checks if car is Through or turn
@@ -450,15 +576,16 @@ namespace WindowsFormsApplicationTVA
             foreach(var c in CarListTemp)
             {
                 var tempRect = c.History[0];
-                Point left = tempRect.Location;
-                Point top = new Point(tempRect.X + tempRect.Width, tempRect.Y);
-                Point right = new Point(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height);
-                Point bottom = new Point(tempRect.X, tempRect.Height + tempRect.Y);
+                //Point left = tempRect.Location;
+                //Point top = new Point(tempRect.X + tempRect.Width, tempRect.Y);
+                //Point right = new Point(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height);
+                //Point bottom = new Point(tempRect.X, tempRect.Height + tempRect.Y);
+                Point p = getCenter(tempRect);
                switch(c.isThrough)
                {
                    case true:
 
-                       if(!poly.ContainsPoint(poly.midPoint(bottom, right)))
+                       if(!poly.ContainsPoint(p))
                        {
                            c.done = true;
                        }
@@ -467,7 +594,7 @@ namespace WindowsFormsApplicationTVA
 
                    case false:
 
-                       if (!poly.ContainsPoint(poly.midPoint(left, top)))
+                       if (!poly.ContainsPoint(p))
                        {
                            c.done = true;
                        }
@@ -484,8 +611,8 @@ namespace WindowsFormsApplicationTVA
         //FFD - checks elapsed, adds analysis 
         private void checkFinished()
         {
-            Thread th = new Thread(new ThreadStart(updateListView));
-            th.Start();
+            //Thread th = new Thread(new ThreadStart(updateListView));
+            //th.Start();
 
 
 
@@ -494,33 +621,33 @@ namespace WindowsFormsApplicationTVA
         //shade for alternating listview items
         Color shaded = Color.FromArgb(149, 165, 166);
 
-        private void AddListView(Car cc)
-        {
+        //private void AddListView(Car cc)
+        //{
 
-           //create a listview item
-            ListViewItem it = new ListViewItem(listView1.Items.Count.ToString());
-            //give it a tag
-            it.Tag = cc;
-            //add the subitems
-            it.SubItems.Add(cc.elapsedFrames.ToString());
-            //FFD this should be c.history[0].gettime(Frames Per Second)
-            it.SubItems.Add(cc.tracked.ToString());
-            //Then show if Through or Turn
-            it.SubItems.Add(cc.isValidData.ToString());
-            //not really needed
-            it.SubItems.Add(cc.done.ToString());
+        //   //create a listview item
+        //    ListViewItem it = new ListViewItem(listView1.Items.Count.ToString());
+        //    //give it a tag
+        //    it.Tag = cc;
+        //    //add the subitems
+        //    it.SubItems.Add(cc.elapsedFrames.ToString());
+        //    //FFD this should be c.history[0].gettime(Frames Per Second)
+        //    it.SubItems.Add(cc.tracked.ToString());
+        //    //Then show if Through or Turn
+        //    it.SubItems.Add(cc.isValidData.ToString());
+        //    //not really needed
+        //    it.SubItems.Add(cc.done.ToString());
 
-            if(listView1.Items.Count % 2 == 1)
-            {
-                it.BackColor = shaded;
-                it.UseItemStyleForSubItems = true;
-            }
+        //    if(listView1.Items.Count % 2 == 1)
+        //    {
+        //        it.BackColor = shaded;
+        //        it.UseItemStyleForSubItems = true;
+        //    }
 
            
 
-            listView1.BeginInvoke(new MethodInvoker(() => listView1.Items.Insert(0,it)));
-            //format and add this car to the list with an ID. 1,2,3,4,...
-        }
+        //    listView1.BeginInvoke(new MethodInvoker(() => listView1.Items.Insert(0,it)));
+        //    //format and add this car to the list with an ID. 1,2,3,4,...
+        //}
 
         //checks if rectangle is in the top of the poly, this is a bad way of doing this.
         private bool isTop(Rectangle r)
@@ -534,29 +661,29 @@ namespace WindowsFormsApplicationTVA
         public List<Rectangle> ValidateRects(List<Rectangle> temp)
         {
 
-            // these are points that are areas off to the sides of the polygon - areas that would contain traffic coming from the other side.
-            Point[] leftExclude = new Point[] {
-                poly.Left,
-                poly.Bottom,
-                new Point(poly.Left.X - 200, poly.Left.Y),
-                new Point(poly.Bottom.X - 200, poly.Bottom.Y)
+            //// these are points that are areas off to the sides of the polygon - areas that would contain traffic coming from the other side.
+            //Point[] leftExclude = new Point[] {
+            //    poly.Left,
+            //    poly.Bottom,
+            //    new Point(poly.Left.X - 200, poly.Left.Y),
+            //    new Point(poly.Bottom.X - 200, poly.Bottom.Y)
             
-            };
+            //};
 
-            Point[] rightExclude = new Point[] {
-                poly.Left,
-                poly.Bottom,
-                new Point(poly.Top.X - 200, poly.Top.Y),
-                new Point(poly.Right.X - 200, poly.Right.Y)
+            //Point[] rightExclude = new Point[] {
+            //    poly.Left,
+            //    poly.Bottom,
+            //    new Point(poly.Top.X - 200, poly.Top.Y),
+            //    new Point(poly.Right.X - 200, poly.Right.Y)
             
-            };
+            //};
             List<Rectangle> ValidatedList = new List<Rectangle>();
             foreach (Rectangle rr in temp)
             {
                // var r = pictureBox1.RectangleToClient(rr);
                 var r = rr;
-                r.X = (int)(rr.X / scaleX);
-                r.Y = (int)(rr.Y / scaleY);
+                r.X = (int)((rr.X / scaleX) + offsetx);
+                r.Y = (int)((rr.Y / scaleY) + offsety);
 
                 r.Width = (int)(rr.Width / scaleX);
                 r.Height = (int)(rr.Height / scaleY);
@@ -788,7 +915,7 @@ namespace WindowsFormsApplicationTVA
                 {
                     Turn = CurrentCar;
                 }
-                updateListView();
+                //updateListView();
                 CurrentCar = new Car();
             }
 
@@ -840,7 +967,7 @@ namespace WindowsFormsApplicationTVA
                 Turn = CurrentCar;
             }
             Console.WriteLine(Environment.NewLine + "---- Assigned New Car ---- " + Environment.NewLine);
-            updateListView();
+           // updateListView();
             //AnalyzeCars();
             CurrentCar = new Car();
         }
@@ -851,55 +978,55 @@ namespace WindowsFormsApplicationTVA
         public void updateStatus(string txt)
         {
             toolStripStatusLabel1.Text = txt;
-            statusStrip1.Refresh();
+            //statusStrip1.Refresh();
         }
 
 
 
-        private void updateListView()
-        {
+        //private void updateListView()
+        //{
 
-            if(InvokeRequired)
-            {
-                MethodInvoker method = new MethodInvoker(updateListView);
-                Invoke(method);
-                return;
-            }
-            listView1.BeginUpdate();
+        //    if(InvokeRequired)
+        //    {
+        //        MethodInvoker method = new MethodInvoker(updateListView);
+        //        Invoke(method);
+        //        return;
+        //    }
+        //    listView1.BeginUpdate();
 
-            var carTemp = new List<Car>();
-            carTemp.AddRange(CarMaster) ;
+        //    var carTemp = new List<Car>();
+        //    carTemp.AddRange(CarMaster) ;
 
-            foreach (var c in carTemp)
-            {
+        //    foreach (var c in carTemp)
+        //    {
 
-             //   var vv = listView1.Items.IndexOfKey(c.id.ToString());
+        //     //   var vv = listView1.Items.IndexOfKey(c.id.ToString());
 
-                var vv = listView1.Items.Count - c.id -1;
-                if (vv >= 0)
-                {
-                    ListViewItem i = listView1.Items[vv];
+        //        var vv = listView1.Items.Count - c.id -1;
+        //        if (vv >= 0)
+        //        {
+        //            ListViewItem i = listView1.Items[vv];
 
-                    //foreach (ListViewItem i in listView1.Items)
-                    //{
-                    if (i.Tag == c)
-                    {
-                        i.SubItems[1].Text = c.elapsedFrames.ToString();
-                        i.SubItems[2].Text = c.done.ToString();
-                        i.SubItems[3].Text = c.isValidData.ToString();
-                        i.SubItems[4].Text = c.done.ToString();
-                    }
-                    //}
+        //            //foreach (ListViewItem i in listView1.Items)
+        //            //{
+        //            if (i.Tag == c)
+        //            {
+        //                i.SubItems[1].Text = c.elapsedFrames.ToString();
+        //                i.SubItems[2].Text = c.done.ToString();
+        //                i.SubItems[3].Text = c.isValidData.ToString();
+        //                i.SubItems[4].Text = c.done.ToString();
+        //            }
+        //            //}
 
-                }
+        //        }
 
-            }
+        //    }
             
           
-            listView1.EndUpdate();
-            ///listView1.Refresh();
+        //    listView1.EndUpdate();
+        //    ///listView1.Refresh();
 
-        }
+        //}
         #endregion
 
         #region Utilites | Dialogs
@@ -1013,7 +1140,7 @@ namespace WindowsFormsApplicationTVA
         {
             // var transparentBitmap = new Bitmap(pbRectangle.Width, pbRectangle.Height);
             // transparentBitmap.MakeTransparent();
-           // loadVideo(@"C:\Users\sstrickland\Desktop\Tracking Video\Barrett_BarrettLakes2014-06-12_15-48-221.avi");
+           //loadVideo(@"C:\Users\sstrickland\Desktop\Tracking Video\Barrett_BarrettLakes2014-06-12_15-48-221.avi");
 
 
         }
@@ -1228,19 +1355,21 @@ namespace WindowsFormsApplicationTVA
             // Draw the new polygon.
             if (NewPolygon != null)
             {
+                //SolidBrush dashedBrush = new SolidBrush(Color.FromArgb(142, 68, 173);
+                Pen dashedPen = new Pen(Color.FromArgb(231, 76, 60), 3);
                 // Draw the new polygon.
                 if (NewPolygon.Count > 1)
                 {
-                    e.Graphics.DrawLines(Pens.DarkTurquoise, NewPolygon.ToArray());
+                    e.Graphics.DrawLines(dashedPen, NewPolygon.ToArray());
                 }
 
                 // Draw the newest edge.
                 if (NewPolygon.Count > 0)
                 {
-                    using (Pen dashed_pen = new Pen(Color.DarkTurquoise))
+                    using (Pen dashed_pen = new Pen(Color.FromArgb(142, 68, 173)))
                     {
                         dashed_pen.DashPattern = new float[] { 3, 3 };
-                        e.Graphics.DrawLine(dashed_pen,
+                        e.Graphics.DrawLine(dashedPen,
                             NewPolygon[NewPolygon.Count - 1],
                             NewPoint);
                     }
